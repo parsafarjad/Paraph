@@ -1,0 +1,136 @@
+--- PAGE 1 ---
+دﻧا تﻧارﻓ هژورﭘ ﯽﻧﻓ تادﻧﺗﺳﻣ
+هدﺷ هدﺎﻔﺗﺳا یﺎھ یژوﻟوﻧﮑﺗ
+نﺎﺑز و کرو مﯾرﻓ
+Next.js 16.1.1: ﮫﯾﺎﭘ رﺑ هژورﭘ ﯽﻠﺻا کروم ﯾرﻓ App Router
+**React 19.2.3
+TypeScript: ارﺟا نﺎﻣز یﺎھﺎطﺧ شھﺎﮐ و ﺎھ عوﻧ ﯽﻧﻣﯾا شﯾازﻓا
+UI و لﯾﺎﺗﺳا
+Tailwind CSS v4: مﺗﺳﯾﺳ Utility-first ﯽھد لﯾﺎﺗﺳا یارﺑ
+shadcn/ui + Radix UI: و ددﺟﻣ هدﺎﻔﺗﺳا لﺑﺎﻗ یﺎھ تﻧﻧوﭘﻣﺎﮐ Accessible
+clsx / tailwind-merge: ﮏﯾﻣﺎﻧﯾاد یﺎھس ﻼﮐ تﯾرﯾدﻣ
+lucide-react: ﺎھ نوﮑﯾآ
+State و هداد تﯾرﯾدﻣ
+@tanstack/react-query: تﯾرﯾدﻣ state شﮐ ،رورﺳ، refetch و sync ﺎھ هداد
+Zustand: تﯾرﯾدﻣ state تﻧﯾﻼﮐ (UI state، auth، stepﺎھ)
+ﯽﺟﻧﺳرﺎﺑﺗﻋا و مرﻓ
+react-hook-form: ﺎﺑ ﺎھ مرﻓ تﯾرﯾدﻣ performance ﻻﺎﺑ
+zod: ﺎﺑ ﮓﻧھﺎﻣھ و ﺎﻣﯾﮑﺳا ﯽﺟﻧﺳرﺎﺑﺗﻋا TypeScript
+@hookform/resolvers: لﺎﺻﺗا Zod ﺎھ مرﻓ ﮫﺑ
+Schema مرﻓ رھ یارﺑ ﮫﻧﺎﮔادﺟ فﯾرﻌﺗ
+API ﺎﺑ طﺎﺑﺗرا
+Axios: ﺎﺑ طﺎﺑﺗرا API تﻧﯾﻼﮐ تﻣﺳ یﺎھ
+Fetch : ﺎﺑ طﺎﺑﺗرا API رورﺳ تﻣﺳ یﺎھ
+(Package Manager) ﺞﯾﮑﭘ تﯾرﯾدﻣ
+-- pnpm: ناوﻧﻋﮫ ﺑ Package Manager هژورﭘ ﯽﻠﺻا
+:pnpm زا هدﺎﻔﺗﺳا لﯾﻻد
+
+--- PAGE 2 ---
+yarn و npm ﮫﺑ تﺑﺳﻧ رﺗﻻﺎﺑ تﻋرﺳ
+content-addressable رﺎﺗﺧﺎﺳ لﯾﻟد ﮫﺑ رﺗﻣﮐ ﮏﺳﯾد یﺎﺿﻓ فرﺻﻣ
+(strict dependency resolution) ﮫﺗﺳاوﺧﺎﻧ یﺎھﯽ ﮕﺗﺳﺑاو بﺻﻧ زا یرﯾﮔوﻠﺟ
+ﯽﻣﯾﺗ و رﯾذﭘس ﺎﯾﻘﻣ یﺎھ هژورﭘ یارﺑ بﺳﺎﻧﻣ
+هژورﭘ تﺳﺗ یژﺗارﺗﺳا *
+دوﺷ ﯽﻣ ﮫﺗﺧﺎﻧﺷ **Co-located Tests مﺎﻧ ﮫﺑ شور
+دﮐ ﺎﺑ تﺳﺗ مﯾﻘﺗﺳﻣ طﺎﺑﺗرا
+Refactor ﺮﺗ ﻦﻣا -
+ﻊﯾرﺳ رﺎﯾﺳﺑ تﺳﺗ ندرﮐ ادﯾﭘ
+هدﺷش وﻣارﻓ یﺎھ تﺳﺗ زا یرﯾﮔوﻠﺟ
+Feature-based Architecture ﺎﺑ ﮓﻧھﺎﻣھ
+دﺎﮭﻧﺷﯾﭘ ﮫﭼرﺎﭘﮑﯾ و دﺣاو یﺎھت ﺳﺗ یارﺑ بﺳﺎﻧﻣ بﺎﺧﺗﻧا ناوﻧﻋﮫ ﺑ Vitest رازﺑا ،هدﻧﯾآ رد تﺳﺗ یزﺎﺳه دﺎﯾﭘ تروﺻ رد
+.دوﺷ ﯽﻣ
+Vitest ﺎﺑ لﻣﺎﮐ یرﺎﮔزﺎﺳ ،ﻻﺎﺑ تﻋرﺳ لﯾﻟد ﮫﺑ TypeScript، بﺳﺎﻧﻣ یاﮫ ﻧﯾزﮔ ،هژورﭘ یرﺎﻣﻌﻣ ﺎﺑ بﺳﺎﻧﻣ ﯽﮕﻧھﺎﻣھ و
+و ﺎھ مرﻓ ،ﺎھک وھ ،رﺎﮐوب ﺳﮐ قطﻧﻣ تﺳﺗ یارﺑ utilityتﺳا ﺎھ.
+.دوﺷ ﯽﻣ دﺎﮭﻧﺷﯾﭘ Playwright رازﺑا ،End-to-End یﺎھ تﺳﺗ یارﺑ
+هژورﭘ یرﺎﻣﻌﻣ
+Feature-based Architecture
+:تﺳا هدﺷ ﯽھد نﺎﻣزﺎﺳ ﺎھfeature سﺎﺳا رﺑ هژورﭘ
+src/
+├─ app/
+│ ├─ (main)/
+│ ├─ layout.tsx
+│ └─ page.tsx
+│
+├─ features/
+│ ├─ auth/
+
+--- PAGE 3 ---
+│ │ ├─ components/
+│ │ │ ├─ LoginForm.tsx
+│ │ │ └─ LoginForm.test.tsx
+│ │ ├─ hooks/
+│ │ │ ├─ useLogin.ts
+│ │ │ └─ useLogin.test.ts
+│ │ ├─ services/
+│ │ │ ├─ auth.api.ts
+│ │ │ └─ auth.api.test.ts
+│ │ ├─ schemas/
+│ │ │ ├─ login.schema.ts
+│ │ │ └─ login.schema.test.ts
+│ │ ├─ store/
+│ │ │ ├─ auth.store.ts
+│ │ │ └─ auth.store.test.ts
+│ │ └─ types/
+│ │
+│ └─ product/
+│ ├─ components/
+│ ├─ hooks/
+│ └─ ...
+│
+├─ shared/
+│ ├─ components/
+│ │ ├─ Button.tsx
+│ │ └─ Button.test.tsx
+│ ├─ hooks/
+└─ useDebounce.ts
+│ │ └─ useDebounce.test.ts
+│ └─ utils/
+└─ formatDate.ts
+│ └─ formatDate.test.ts
+│
+├─ tests/
+│ ├─ setup.ts
+│ ├─ mocks/
+│ │ ├─ server.ts
+│ │ └─ handlers.ts
+└─ auth.handlers.ts
+│ └─ utils/
+│
+└─ docs/
+:ثﻋﺎﺑ رﺎﺗﺧﺎﺳ نﯾا
+
+--- PAGE 4 ---
+ﯽﯾﺎﻧاوﺧ شﯾازﻓا
+رﺗﮭﺑ یرﯾذﭘس ﺎﯾﻘﻣ
+رﺗﻻﺎﺑ یرﯾذﭘت ﺳﺗ
+.دوﺷ ﯽﻣ
+shadcn/ui زا هدﺎﻔﺗﺳا
+لوﺻا
+Wrapper تﻧﻧوﭘﻣﺎﮐ رھ یارﺑ ﯽﺻﺎﺻﺗﺧا
+// shared/components/Button.tsx
+import { Button as ShadButton } from '@/components/ui/button'
+export function Button(props) {
+return <ShadButton {...props} />
+}
+:ﺎﯾازﻣ
+هدﻧﯾآ رد UI رﯾﯾﻐﺗ تﯾﻠﺑﺎﻗ
+Consistency
+Error Handling
+ErrorBoundary رد layout ﯽﻠﺻا.
+هدﺎﻔﺗﺳا و ErrorBoundary زﺎﯾﻧ تروﺻ رد ﮫﻧﺎﮔادﺟ تروﺻ ﮫﺑ.
+react-query رد API یﺎھerror تﯾرﯾدﻣ
+/docs رد یزﺎﺳدﻧﺗﺳﻣ درادﻧﺎﺗﺳا
+:Feature رھ یارﺑ
+docs/
+├─ auth.md
+├─ product.md
+
+--- PAGE 5 ---
+└─ architecture.md
+└─ setup.md
+:لﯾﺎﻓ رھ یاوﺗﺣﻣ
+Feature فدھ
+APIﺎھ
+Stateﺎھ
+Flow رﺑرﺎﮐ
+Edge Caseﺎھ
