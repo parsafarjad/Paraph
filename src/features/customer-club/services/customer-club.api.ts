@@ -1,3 +1,6 @@
+import axios from "axios";
+
+import { useAuthStore } from "@/features/auth/store/auth.store";
 import type {
   ActivitiesQuery,
   ClubLevel,
@@ -64,8 +67,22 @@ export async function getDashboard(query: DashboardQuery): Promise<DashboardResp
 }
 
 export async function getLevels(): Promise<ClubLevel[]> {
-  const payload = await getPayload<unknown>("/levels");
-  return normalizeLevels(payload);
+  const accessToken = useAuthStore.getState().accessToken;
+
+  if (!accessToken) {
+    throw new Error("برای دریافت سطح‌ها ابتدا وارد حساب کاربری شوید.");
+  }
+
+  const { data } = await axios.get<ApiEnvelope<unknown>>("/api/levels", {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    withCredentials: false,
+    timeout: 20_000,
+  });
+
+  return normalizeLevels(unwrapApiPayload<unknown>(data));
 }
 
 export async function getRecentActivities(
@@ -74,7 +91,7 @@ export async function getRecentActivities(
   const payload = await getPayload<unknown>("/recent-activities", {
     offset: query.offset,
     size: query.size,
-    type: query.type,
+    ...(query.type === "ALL" ? {} : { type: query.type }),
     ...(query.scope === "vitrin" && query.vitrinId
       ? { userVitrinId: query.vitrinId }
       : {}),

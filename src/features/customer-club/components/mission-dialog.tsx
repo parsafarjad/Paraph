@@ -2,17 +2,33 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { CheckCircle2, CheckSquare, Sparkles, X } from "lucide-react";
+import type { ReactNode } from "react";
 
-export function MissionDialog() {
+import { cn } from "@/shared/utils/cn";
+
+interface MissionDialogProps {
+  triggerLabel?: string;
+  triggerIcon?: ReactNode;
+  triggerClassName?: string;
+}
+
+export function MissionDialog({
+  triggerLabel = "مشاهده ماموریت",
+  triggerIcon = <CheckSquare className="size-5" />,
+  triggerClassName,
+}: MissionDialogProps) {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
         <button
           type="button"
-          className="inline-flex h-11 min-w-[210px] items-center justify-center gap-3 rounded-[10px] bg-[#20aae5] px-6 text-[16px] font-black text-white shadow-[0_6px_14px_rgba(32,170,229,0.20)] outline-none transition-colors hover:bg-[#159ed8] focus-visible:ring-2 focus-visible:ring-[#20aae5]/45 focus-visible:ring-offset-2"
+          className={cn(
+            "inline-flex h-11 min-w-[210px] items-center justify-center gap-3 rounded-[10px] bg-[#20aae5] px-6 text-[16px] font-black text-white shadow-[0_6px_14px_rgba(32,170,229,0.20)] outline-none transition-colors hover:bg-[#159ed8] focus-visible:ring-2 focus-visible:ring-[#20aae5]/45 focus-visible:ring-offset-2",
+            triggerClassName,
+          )}
         >
-          <CheckSquare className="size-5" />
-          مشاهده ماموریت
+          {triggerIcon}
+          {triggerLabel}
         </button>
       </Dialog.Trigger>
 

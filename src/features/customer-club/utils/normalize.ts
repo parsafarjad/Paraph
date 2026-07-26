@@ -146,14 +146,22 @@ export function normalizeLevels(payload: unknown): ClubLevel[] {
   return arrayFromPayload(payload)
     .map((item, index) => {
       const record = asRecord(item);
+      const status = get(record, "status", "isActive");
+      const deletedAt = get(record, "deletedAt", "deleted_at");
+
+      if (status === false || (deletedAt !== undefined && deletedAt !== null)) {
+        return null;
+      }
+
       return {
         id: id(get(record, "id", "_id", "levelId"), `level-${index}`),
         name: text(get(record, "name", "title"), `سطح ${index + 1}`),
         scores: number(get(record, "scores", "score", "minimumScore")),
         iconUrl: resolveImageUrl(getNested(record, "file.link") ?? get(record, "icon", "iconUrl")),
-      };
+      } satisfies ClubLevel;
     })
-    .sort((a, b) => a.scores - b.scores);
+    .filter((level): level is ClubLevel => level !== null)
+    .sort((first, second) => first.scores - second.scores);
 }
 
 export function normalizeSummary(payload: unknown): ClubSummary {

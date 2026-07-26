@@ -20,6 +20,8 @@ export enum RecentActivitiesTypeEnum {
   TRANSFERCOIN = "TRANSFERCOIN",
 }
 
+export type RecentActivitiesFilter = "ALL" | RecentActivitiesTypeEnum;
+
 export interface UserProfile {
   id: string;
   fullName: string;
@@ -99,5 +101,5 @@ export interface DashboardQuery {
 export interface ActivitiesQuery extends DashboardQuery {
   offset: number;
   size: number;
-  type: RecentActivitiesTypeEnum;
+  type: RecentActivitiesFilter;
 }

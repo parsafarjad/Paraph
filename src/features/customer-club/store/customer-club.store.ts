@@ -1,15 +1,15 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { RecentActivitiesTypeEnum } from "@/features/customer-club/types/customer-club.types";
+import type { RecentActivitiesFilter } from "@/features/customer-club/types/customer-club.types";
 
 interface CustomerClubState {
   scope: "user" | "vitrin";
   vitrinId?: string;
-  activityType: RecentActivitiesTypeEnum;
+  activityType: RecentActivitiesFilter;
   setUserScope: () => void;
   setVitrinScope: (vitrinId: string) => void;
-  setActivityType: (activityType: RecentActivitiesTypeEnum) => void;
+  setActivityType: (activityType: RecentActivitiesFilter) => void;
 }
 
 export const useCustomerClubStore = create<CustomerClubState>()(
@@ -17,7 +17,7 @@ export const useCustomerClubStore = create<CustomerClubState>()(
     (set) => ({
       scope: "user",
       vitrinId: undefined,
-      activityType: RecentActivitiesTypeEnum.BOTH,
+      activityType: "ALL",
       setUserScope: () => set({ scope: "user", vitrinId: undefined }),
       setVitrinScope: (vitrinId) => set({ scope: "vitrin", vitrinId }),
       setActivityType: (activityType) => set({ activityType }),

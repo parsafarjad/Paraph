@@ -20,7 +20,6 @@ import {
   useRecentActivities,
 } from "@/features/customer-club/hooks/use-customer-club";
 import { useCustomerClubStore } from "@/features/customer-club/store/customer-club.store";
-import { RecentActivitiesTypeEnum } from "@/features/customer-club/types/customer-club.types";
 import { Button } from "@/shared/components/ui/button";
 import { Card } from "@/shared/components/ui/card";
 import { getRequestErrorMessage } from "@/shared/lib/api/response";
@@ -37,7 +36,7 @@ export function CustomerClubPage() {
     scope,
     vitrinId,
     size: 10,
-    type: activityType ?? RecentActivitiesTypeEnum.BOTH,
+    type: activityType,
   });
 
   useEffect(() => {
@@ -95,36 +94,43 @@ export function CustomerClubPage() {
               summary={dashboard.summary}
             />
 
-            <section className="bg-[linear-gradient(180deg,#dcecff_0%,#e4e2ff_100%)] pb-14 pt-6">
-              <div className="mx-auto w-[calc(100%_-_32px)] max-w-[1120px]">
-                <LevelProgress
-                  levels={levelsQuery.data ?? []}
-                  score={dashboard.selectedVitrin?.scores ?? dashboard.user.scores}
-                  isLoading={levelsQuery.isLoading}
-                  isError={levelsQuery.isError}
-                  error={levelsQuery.error}
-                  onRetry={() => levelsQuery.refetch()}
-                />
-              </div>
+            <section className="bg-white px-4 pb-8 pt-10 sm:px-6 lg:pb-10">
+              <LevelProgress
+                levels={levelsQuery.data}
+                score={dashboard.selectedVitrin?.scores ?? dashboard.user.scores}
+                isLoading={levelsQuery.isLoading && levelsQuery.data.length === 0}
+                isError={levelsQuery.isBlockingError}
+                error={levelsQuery.error}
+                onRetry={() => void levelsQuery.refetch()}
+              />
             </section>
           </>
         )}
 
         <CampaignBanner />
 
-        <div className="bg-[linear-gradient(180deg,#dbe6ff_0%,#e9e5ff_100%)] py-12 lg:py-16">
-          <div className="mx-auto max-w-[1120px] space-y-16 px-4 lg:px-6">
-            <section className="grid gap-5 lg:grid-cols-[0.83fr_1.45fr]">
+        <div className="bg-white py-14 lg:py-20">
+          <section
+            dir="ltr"
+            className="mx-auto grid w-[calc(100%_-_32px)] max-w-[1584px] items-start gap-14 xl:grid-cols-[minmax(420px,554px)_minmax(0,910px)] xl:gap-[120px]"
+          >
+            <div dir="rtl">
               <ActivityChart activities={activities} />
+            </div>
+
+            <div dir="rtl">
               <RecentActivities
                 items={activities}
                 isLoading={activitiesQuery.isLoading}
                 isFetching={activitiesQuery.isFetching}
                 hasNextPage={activitiesQuery.hasNextPage}
                 isFetchingNextPage={activitiesQuery.isFetchingNextPage}
-                onLoadMore={() => activitiesQuery.fetchNextPage()}
+                onLoadMore={() => void activitiesQuery.fetchNextPage()}
               />
-            </section>
+            </div>
+          </section>
+
+          <div className="mx-auto mt-20 w-[calc(100%_-_32px)] max-w-[1120px]">
             <FeatureGrid />
           </div>
         </div>
