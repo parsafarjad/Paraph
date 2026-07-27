@@ -52,6 +52,8 @@ export function ProfileOverview({
           <div
             dir="ltr"
             className="grid h-full gap-8 min-[1440px]:grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)_1px_minmax(0,1fr)] min-[1440px]:gap-10"
+            // className="justify-between items-center h-full flex-col-reverse gap-10 min-[1440px]:flex min-[1440px]:flex-row "
+
           >
             <StatsPanel
               coins={coins}
@@ -306,7 +308,7 @@ function LevelCard({ level, scores }: { level: string; scores: number }) {
           </p>
         </div>
 
-        <CircleHelp className="size-[18px] shrink-0 text-[#667880]" />
+        {/* <CircleHelp className="size-[18px] shrink-0 text-[#667880]" /> */}
       </div>
     </article>
   );

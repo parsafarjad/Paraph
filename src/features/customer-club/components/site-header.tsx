@@ -50,7 +50,7 @@ export function SiteHeader() {
           <Link
             href="/"
             aria-label="صفحه اصلی پاراف"
-            className="relative block h-[49px] w-[174px] shrink-0"
+            className="relative block h-[49px] w-[174px] shrink-0 " 
           >
             <Image
               src="/assets/paraf-brand.svg"

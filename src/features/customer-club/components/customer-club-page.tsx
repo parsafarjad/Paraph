@@ -117,7 +117,7 @@ export function CustomerClubPage() {
           <CampaignBanner />
         </div>
 
-        <section className="mt-6 min-[1760px]:h-[832px]">
+        {/* <section className="mt-6 min-[1760px]:h-[832px]">
           <PageContainer
             dir="ltr"
             className="grid items-start gap-6 py-10 xl:grid-cols-[minmax(420px,650px)_minmax(0,1fr)] min-[1760px]:h-[832px] min-[1760px]:grid-cols-[650px_1006px]"
@@ -143,7 +143,70 @@ export function CustomerClubPage() {
               />
             </div>
           </PageContainer>
-        </section>
+        </section> */}
+
+<section className="mt-4 sm:mt-6 min-[1760px]:h-[832px]">
+  <PageContainer
+    dir="ltr"
+    className="
+      grid min-w-0 grid-cols-1 items-start
+      gap-4 py-6
+
+      sm:gap-6 sm:py-8
+
+      xl:grid-cols-[minmax(360px,650px)_minmax(0,1fr)]
+
+      min-[1760px]:h-[832px]
+      min-[1760px]:grid-cols-[650px_1006px]
+      min-[1760px]:py-10
+    "
+  >
+    <div
+      dir="rtl"
+      className="
+        min-w-0 rounded-[20px] bg-white
+        px-4 py-5
+
+        sm:rounded-[24px] sm:px-6 sm:py-8
+        md:px-8
+
+        xl:min-h-[620px]
+
+        min-[1760px]:h-[752px]
+        min-[1760px]:px-12
+        min-[1760px]:py-10
+      "
+    >
+      <ActivityChart activities={activities} />
+    </div>
+
+    <div
+      dir="rtl"
+      className="
+        min-w-0 rounded-[20px] bg-white
+        px-3 py-5
+
+        sm:rounded-[24px] sm:px-6 sm:py-8
+        md:px-8
+
+        xl:min-h-[620px]
+
+        min-[1760px]:h-[752px]
+        min-[1760px]:px-12
+        min-[1760px]:py-10
+      "
+    >
+      <RecentActivities
+        items={activities}
+        isLoading={activitiesQuery.isLoading}
+        isFetching={activitiesQuery.isFetching}
+        hasNextPage={activitiesQuery.hasNextPage}
+        isFetchingNextPage={activitiesQuery.isFetchingNextPage}
+        onLoadMore={() => void activitiesQuery.fetchNextPage()}
+      />
+    </div>
+  </PageContainer>
+</section>
 
         <div className="mt-10">
           <FeatureGrid />
