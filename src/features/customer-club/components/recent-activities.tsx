@@ -177,6 +177,59 @@ function RecentActivitiesSkeleton() {
   );
 }
 
+// function ActivityRow({ activity }: { activity: RecentActivity }) {
+//   const config = getActivityConfig(activity.type);
+//   const amounts = getActivityAmounts(activity);
+//   const description = activity.taskDescription || activity.taskTitle;
+
+//   return (
+//     <article
+//       dir="ltr"
+//       className="grid h-[52px] grid-cols-[minmax(0,1fr)_auto_40px] items-center gap-3 overflow-hidden rounded-full bg-[#f5f7f7] p-2 sm:grid-cols-[120px_58px_minmax(0,1fr)_100px_40px] sm:px-2"
+//     >
+//       <time
+//         dir="rtl"
+//         className="hidden items-center whitespace-nowrap text-[9px] font-medium text-[#9aa3a9] sm:flex"
+//       >
+//         {formatActivityTimestamp(activity.createdAt)}
+//       </time>
+
+//       <span
+//         dir="rtl"
+//         className="hidden h-6 items-center justify-center rounded-full bg-[#f0f2f3] px-2 text-[9px] font-bold text-[#31363a] sm:flex"
+//       >
+//         موفق
+//       </span>
+
+//       <p
+//         dir="rtl"
+//         className="min-w-0 truncate text-right text-[11px] font-medium leading-6 text-[#303438]"
+//         title={description}
+//       >
+//         {description}
+//       </p>
+
+//       <div
+//         dir="rtl"
+//         className="flex min-w-[84px] flex-col items-start justify-center whitespace-nowrap text-right text-[11px] font-black leading-[18px] text-[#17191b] sm:min-w-0"
+//       >
+//         {amounts.map((amount) => (
+//           <span key={amount}>{amount}</span>
+//         ))}
+//       </div>
+
+//       <span
+//         className={cn(
+//           "grid size-9 place-items-center rounded-full bg-white",
+//           config.className,
+//         )}
+//         aria-hidden="true"
+//       >
+//         {config.icon}
+//       </span>
+//     </article>
+//   );
+// }
 function ActivityRow({ activity }: { activity: RecentActivity }) {
   const config = getActivityConfig(activity.type);
   const amounts = getActivityAmounts(activity);
@@ -185,25 +238,77 @@ function ActivityRow({ activity }: { activity: RecentActivity }) {
   return (
     <article
       dir="ltr"
-      className="grid h-[52px] grid-cols-[minmax(0,1fr)_auto_40px] items-center gap-3 overflow-hidden rounded-full bg-[#f5f7f7] p-2 sm:grid-cols-[120px_58px_minmax(0,1fr)_100px_40px] sm:px-2"
+      className={cn(
+        `
+          group relative isolate
+          grid h-[52px]
+          grid-cols-[minmax(0,1fr)_auto_40px]
+          items-center gap-3
+          overflow-hidden rounded-full
+          border border-transparent
+          bg-[#f5f7f7] p-2
+
+          transition-[border-color,box-shadow]
+          duration-300 ease-out
+
+          sm:grid-cols-[120px_58px_minmax(0,1fr)_100px_40px]
+          sm:px-2
+        `,
+        config.hoverBorderClassName,
+      )}
     >
+      {/* Animated hover background */}
+      <span
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute inset-0 z-0 rounded-full
+          opacity-0 transition-opacity duration-300 ease-out
+          group-hover:opacity-100
+        "
+        style={{
+          background: config.hoverBackground,
+        }}
+      />
+
       <time
         dir="rtl"
-        className="hidden items-center whitespace-nowrap text-[9px] font-medium text-[#9aa3a9] sm:flex"
+        className="
+          relative z-10 hidden items-center whitespace-nowrap
+          text-[9px] font-medium text-[#9aa3a9]
+          transition-colors duration-300
+          sm:flex
+        "
       >
         {formatActivityTimestamp(activity.createdAt)}
       </time>
 
       <span
         dir="rtl"
-        className="hidden h-6 items-center justify-center rounded-full bg-[#f0f2f3] px-2 text-[9px] font-bold text-[#31363a] sm:flex"
+        className="
+          relative z-10 hidden h-6 items-center justify-center
+          rounded-full border border-transparent
+          bg-[#f0f2f3] px-2
+          text-[9px] font-bold text-[#31363a]
+
+          transition-[background-color,border-color,box-shadow]
+          duration-300 ease-out
+
+          group-hover:border-[#859196]
+          group-hover:bg-white/90
+          group-hover:shadow-[0_2px_7px_rgba(42,57,63,0.08)]
+
+          sm:flex
+        "
       >
         موفق
       </span>
 
       <p
         dir="rtl"
-        className="min-w-0 truncate text-right text-[11px] font-medium leading-6 text-[#303438]"
+        className="
+          relative z-10 min-w-0 truncate text-right
+          text-[11px] font-medium leading-6 text-[#303438]
+        "
         title={description}
       >
         {description}
@@ -211,7 +316,21 @@ function ActivityRow({ activity }: { activity: RecentActivity }) {
 
       <div
         dir="rtl"
-        className="flex min-w-[84px] flex-col items-start justify-center whitespace-nowrap text-right text-[11px] font-black leading-[18px] text-[#17191b] sm:min-w-0"
+        className={cn(
+          `
+            relative z-10
+            flex min-w-[84px] flex-col
+            items-start justify-center
+            whitespace-nowrap text-right
+            text-[11px] font-black leading-[18px]
+            text-[#17191b]
+
+            transition-colors duration-300 ease-out
+
+            sm:min-w-0
+          `,
+          config.amountHoverClassName,
+        )}
       >
         {amounts.map((amount) => (
           <span key={amount}>{amount}</span>
@@ -219,18 +338,27 @@ function ActivityRow({ activity }: { activity: RecentActivity }) {
       </div>
 
       <span
-        className={cn(
-          "grid size-9 place-items-center rounded-full bg-white",
-          config.className,
-        )}
         aria-hidden="true"
+        className={cn(
+          `
+            relative z-10 grid size-9 place-items-center
+            rounded-full bg-white
+
+            transition-[color,background-color,transform,box-shadow]
+            duration-300 ease-out
+            will-change-transform
+
+            group-hover:scale-[1.06]
+          `,
+          config.iconClassName,
+          config.iconHoverClassName,
+        )}
       >
         {config.icon}
       </span>
     </article>
   );
 }
-
 function getActivityAmounts(activity: RecentActivity) {
   const score = activity.scoreAmount;
   const coin = activity.coinAmount;
@@ -271,42 +399,166 @@ function signed(value: number) {
   return `${value > 0 ? "+" : ""}${formatNumber(value)}`;
 }
 
+// function getActivityConfig(type: string) {
+//   switch (type) {
+//     case RecentActivitiesTypeEnum.COIN:
+//       return {
+//         icon: <Coins className="size-[19px]" strokeWidth={1.9} />,
+//         className: "text-[#57b8ff]",
+//       };
+
+//     case RecentActivitiesTypeEnum.SCORE:
+//       return {
+//         icon: <Zap className="size-[19px]" strokeWidth={2} />,
+//         className: "text-[#55e1bd]",
+//       };
+
+//     case RecentActivitiesTypeEnum.SPENTCOIN:
+//       return {
+//         icon: <MinusCircle className="size-[19px]" strokeWidth={1.9} />,
+//         className: "text-[#ff8cad]",
+//       };
+
+//     case RecentActivitiesTypeEnum.TRANSFERCOIN:
+//       return {
+//         icon: <ArrowLeftRight className="size-[19px]" strokeWidth={1.9} />,
+//         className: "text-[#75dec7]",
+//       };
+
+//     case RecentActivitiesTypeEnum.BOTH:
+//       return {
+//         icon: <Gift className="size-[19px]" strokeWidth={1.9} />,
+//         className: "text-[#5bd9bc]",
+//       };
+
+//     default:
+//       return {
+//         icon: <Sparkles className="size-[19px]" strokeWidth={1.9} />,
+//         className: "text-[#93a1ab]",
+//       };
+//   }
+// }
+
 function getActivityConfig(type: string) {
   switch (type) {
     case RecentActivitiesTypeEnum.COIN:
       return {
         icon: <Coins className="size-[19px]" strokeWidth={1.9} />,
-        className: "text-[#57b8ff]",
+
+        iconClassName: "text-[#57bff0]",
+
+        iconHoverClassName: `
+          group-hover:bg-[#55bde9]
+          group-hover:text-white
+          group-hover:shadow-[0_5px_14px_rgba(85,189,233,0.3)]
+        `,
+
+        amountHoverClassName: "group-hover:text-[#178eb8]",
+
+        hoverBorderClassName: "hover:border-[#c6eaf6]",
+
+        hoverBackground:
+          "linear-gradient(90deg, #dff3fa 0%, #edf9fc 42%, #fbfdfe 100%)",
       };
 
     case RecentActivitiesTypeEnum.SCORE:
       return {
         icon: <Zap className="size-[19px]" strokeWidth={2} />,
-        className: "text-[#55e1bd]",
+
+        iconClassName: "text-[#55dfb8]",
+
+        iconHoverClassName: `
+          group-hover:bg-[#36c996]
+          group-hover:text-white
+          group-hover:shadow-[0_5px_14px_rgba(54,201,150,0.3)]
+        `,
+
+        amountHoverClassName: "group-hover:text-[#23b884]",
+
+        hoverBorderClassName: "hover:border-[#b9ecd9]",
+
+        hoverBackground:
+          "linear-gradient(90deg, #d9f5eb 0%, #ecfaf5 46%, #fbfefd 100%)",
       };
 
     case RecentActivitiesTypeEnum.SPENTCOIN:
       return {
-        icon: <MinusCircle className="size-[19px]" strokeWidth={1.9} />,
-        className: "text-[#ff8cad]",
+        icon: <Coins className="size-[19px]" strokeWidth={1.9} />,
+
+        iconClassName: "text-[#ecc954]",
+
+        iconHoverClassName: `
+          group-hover:bg-[#e5bc2e]
+          group-hover:text-white
+          group-hover:shadow-[0_5px_14px_rgba(229,188,46,0.3)]
+        `,
+
+        amountHoverClassName: "group-hover:text-[#b68d06]",
+
+        hoverBorderClassName: "hover:border-[#f1dda0]",
+
+        hoverBackground:
+          "linear-gradient(90deg, #fff0bf 0%, #fff8df 48%, #fffdf7 100%)",
       };
 
     case RecentActivitiesTypeEnum.TRANSFERCOIN:
       return {
-        icon: <ArrowLeftRight className="size-[19px]" strokeWidth={1.9} />,
-        className: "text-[#75dec7]",
+        icon: <Coins className="size-[19px]" strokeWidth={1.9} />,
+
+        iconClassName: "text-[#ff8698]",
+
+        iconHoverClassName: `
+          group-hover:bg-[#d3233d]
+          group-hover:text-white
+          group-hover:shadow-[0_5px_14px_rgba(211,35,61,0.28)]
+        `,
+
+        amountHoverClassName: "group-hover:text-[#c72139]",
+
+        hoverBorderClassName: "hover:border-[#efbec6]",
+
+        hoverBackground:
+          "linear-gradient(90deg, #f5d2d7 0%, #f9e4e7 46%, #fffafb 100%)",
       };
 
     case RecentActivitiesTypeEnum.BOTH:
       return {
-        icon: <Gift className="size-[19px]" strokeWidth={1.9} />,
-        className: "text-[#5bd9bc]",
+        icon: <ArrowLeftRight className="size-[19px]" strokeWidth={1.9} />,
+
+        iconClassName: "text-[#6bdec1]",
+
+        iconHoverClassName: `
+          group-hover:bg-[#46ceaa]
+          group-hover:text-white
+          group-hover:shadow-[0_5px_14px_rgba(70,206,170,0.3)]
+        `,
+
+        amountHoverClassName: "group-hover:text-[#25ad89]",
+
+        hoverBorderClassName: "hover:border-[#bcebdc]",
+
+        hoverBackground:
+          "linear-gradient(90deg, #d9f5eb 0%, #ebfaf5 46%, #fbfefd 100%)",
       };
 
     default:
       return {
         icon: <Sparkles className="size-[19px]" strokeWidth={1.9} />,
-        className: "text-[#93a1ab]",
+
+        iconClassName: "text-[#93a1ab]",
+
+        iconHoverClassName: `
+          group-hover:bg-[#8798a2]
+          group-hover:text-white
+          group-hover:shadow-[0_5px_14px_rgba(72,87,96,0.2)]
+        `,
+
+        amountHoverClassName: "group-hover:text-[#58666d]",
+
+        hoverBorderClassName: "hover:border-[#dce3e6]",
+
+        hoverBackground:
+          "linear-gradient(90deg, #e8edef 0%, #f3f6f7 50%, #fcfdfd 100%)",
       };
   }
 }

@@ -1,11 +1,22 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import 'tailwind-animations';
 
+@utility animation-infinite {
+  animation-iteration-count: infinite !important;
+}
+
+@theme inline {
+  --font-yekan: var(--font-iranyekan-local);
+  --font-doran: var(--font-doran-local);
+  --font-sans: var(--font-iranyekan-local);
+}
 @theme {
-  --font-sans: "Vazirmatn", "IRANSansX", "Segoe UI", Tahoma, Arial, sans-serif;
+  /* --font-sans: "Vazirmatn", "IRANSansX", "Segoe UI", Tahoma, Arial, sans-serif; */
   --color-paraf-sky: #24aee5;
   --color-paraf-violet: #6d3bea;
 }
+
 
 :root {
   color-scheme: light;
@@ -27,7 +38,7 @@ body {
   min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans);
+   font-family: var(--font-iranyekan-local), Tahoma, Arial, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -97,7 +108,7 @@ button {
   box-shadow: 0 0 0 3px rgb(36 174 229 / 24%);
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
@@ -105,5 +116,11 @@ button {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+} */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
