@@ -9,7 +9,9 @@ import {
 
 describe("customer club normalizers", () => {
   it("normalizes a user payload", () => {
-    expect(normalizeUser({ name: "آرین", level: "برنزی", coins: "12", scores: 50 })).toMatchObject({
+    expect(
+      normalizeUser({ name: "آرین", level: "برنزی", coins: "12", scores: 50 }),
+    ).toMatchObject({
       fullName: "آرین",
       level: "برنزی",
       coins: 12,

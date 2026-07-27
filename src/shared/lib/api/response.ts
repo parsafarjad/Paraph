@@ -68,6 +68,10 @@ export function getRequestErrorMessage(
     return error instanceof Error && error.message ? error.message : fallback;
   }
 
-  const enrichedMessage = (error as typeof error & { userMessage?: string }).userMessage;
-  return enrichedMessage ?? getApiPayloadErrorMessage(error.response?.data, error.message || fallback);
+  const enrichedMessage = (error as typeof error & { userMessage?: string })
+    .userMessage;
+  return (
+    enrichedMessage ??
+    getApiPayloadErrorMessage(error.response?.data, error.message || fallback)
+  );
 }

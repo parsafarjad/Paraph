@@ -10,13 +10,11 @@ import { useAuthStore } from "@/features/auth/store/auth.store";
 import { getApiPayloadErrorMessage } from "@/shared/lib/api/response";
 import type { ApiErrorResponse } from "@/shared/types/api";
 
-const DEFAULT_API_BASE_URL =
-  "https://wholesaler-core-v2.paraf.app/api";
+const DEFAULT_API_BASE_URL = "https://wholesaler-core-v2.paraf.app/api";
 
 export const levelsClient = axios.create({
   baseURL: (
-    process.env.NEXT_PUBLIC_API_BASE_URL ??
-    DEFAULT_API_BASE_URL
+    process.env.NEXT_PUBLIC_API_BASE_URL ?? DEFAULT_API_BASE_URL
   ).replace(/\/$/, ""),
   timeout: 20_000,
   withCredentials: false,
@@ -24,18 +22,14 @@ export const levelsClient = axios.create({
 
 levelsClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const accessToken =
-      useAuthStore.getState().accessToken;
+    const accessToken = useAuthStore.getState().accessToken;
 
     const headers = new AxiosHeaders();
 
     headers.set("Accept", "application/json");
 
     if (accessToken) {
-      headers.set(
-        "Authorization",
-        `Bearer ${accessToken}`,
-      );
+      headers.set("Authorization", `Bearer ${accessToken}`);
     }
 
     config.headers = headers;
@@ -53,8 +47,7 @@ levelsClient.interceptors.response.use(
   (error: AxiosError<ApiErrorResponse>) => {
     const message = getApiPayloadErrorMessage(
       error.response?.data,
-      error.message ||
-        "خطایی در دریافت سطح‌ها رخ داد.",
+      error.message || "خطایی در دریافت سطح‌ها رخ داد.",
     );
 
     if (error.response?.status === 401) {

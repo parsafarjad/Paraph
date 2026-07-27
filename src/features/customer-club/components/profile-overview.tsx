@@ -3,7 +3,6 @@ import {
   CheckSquare,
   ChevronLeft,
   CircleAlert,
-  CircleHelp,
   Link2,
   Zap,
 } from "lucide-react";
@@ -53,7 +52,6 @@ export function ProfileOverview({
             dir="ltr"
             className="grid h-full gap-8 min-[1440px]:grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)_1px_minmax(0,1fr)] min-[1440px]:gap-10"
             // className="justify-between items-center h-full flex-col-reverse gap-10 min-[1440px]:flex min-[1440px]:flex-row "
-
           >
             <StatsPanel
               coins={coins}
@@ -222,7 +220,7 @@ function StatsPanel({
 
         <span
           dir="rtl"
-          className="flex items-center h-[23px] shrink-0 items-center gap-1 rounded-full bg-[#ecf0f2] px-2 text-[12px] font-normal text-[#15181a]"
+          className="flex h-[23px] shrink-0 items-center gap-1 rounded-full bg-[#ecf0f2] px-2 text-[12px] font-normal text-[#15181a]"
         >
           <strong className="font-bold">۳۰</strong> روز اخیر
           <ChevronLeft className="size-4" />
@@ -250,14 +248,13 @@ function CoinCard({ coins }: { coins: number }) {
 
       <div dir="rtl" className="flex min-w-0 flex-1 items-end justify-between">
         <div className="min-w-0">
-          <div className="flex items-center gap-1 ">
+          <div className="flex items-center gap-1">
             <Link2 className="size-5 text-[#c2c9cc]" />
             <strong className="leading-[30px] font-bold text-[#15181a]">
               {formatNumber(coins)}
             </strong>
             <p className="text-[16px] leading-7 whitespace-nowrap text-[#667880]">
-
-            سکه
+              سکه
             </p>
             <Image
               src={"/assets/coin-icon.svg"}

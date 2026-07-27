@@ -50,50 +50,32 @@ export function CustomerClubBreadcrumb({
 
         <div dir="ltr" className="hidden items-center gap-4 md:flex">
           <div
-  aria-label={`امتیاز وفاداری: ${formatNumber(score)}`}
-  className="
-    relative h-8 w-[196px] shrink-0
-    overflow-visible rounded-full bg-white
-    shadow-[0_2px_12px_rgba(102,120,128,0.28)]
-  "
->
-  <span
-    dir="rtl"
-    className="
-      absolute right-[20px] top-1/2
-      flex h-6 w-[76px] -translate-y-1/2
-      items-center justify-center rounded-full
-      bg-[linear-gradient(90deg,#7344eb_0%,#8b45f6_100%)]
-      pr-4 text-[12px] font-bold leading-none text-white
-    "
-  >
-    {isLoading ? "—" : formatNumber(score)}
-  </span>
+            aria-label={`امتیاز وفاداری: ${formatNumber(score)}`}
+            className="relative h-8 w-[196px] shrink-0 overflow-visible rounded-full bg-white shadow-[0_2px_12px_rgba(102,120,128,0.28)]"
+          >
+            <span
+              dir="rtl"
+              className="absolute top-1/2 right-[20px] flex h-6 w-[76px] -translate-y-1/2 items-center justify-center rounded-full bg-[linear-gradient(90deg,#7344eb_0%,#8b45f6_100%)] pr-4 text-[12px] leading-none font-bold text-white"
+            >
+              {isLoading ? "—" : formatNumber(score)}
+            </span>
 
-  {/* White background under the transparent image */}
-  <span
-    aria-hidden="true"
-    className="
-      absolute right-0 top-1/2 z-10
-      grid size-8 -translate-y-1/2
-      place-items-center rounded-full bg-white
-    "
-  >
-    <Image
-      src="/assets/loyalty-cup.svg"
-      alt=""
-      width={30}
-      height={34}
-      priority
-      draggable={false}
-      className="
-        pointer-events-none
-        h-[34px] w-[30px]
-        select-none object-contain
-      "
-    />
-  </span>
-</div>
+            {/* White background under the transparent image */}
+            <span
+              aria-hidden="true"
+              className="absolute top-1/2 right-0 z-10 grid size-8 -translate-y-1/2 place-items-center rounded-full bg-white"
+            >
+              <Image
+                src="/assets/loyalty-cup.svg"
+                alt=""
+                width={30}
+                height={34}
+                priority
+                draggable={false}
+                className="pointer-events-none h-[34px] w-[30px] object-contain select-none"
+              />
+            </span>
+          </div>
 
           <button
             type="button"

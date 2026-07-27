@@ -26,11 +26,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html
-      lang="fa"
-      dir="rtl"
-      className={`${yekan.variable} ${doran.variable}`}
-    >
+    <html lang="fa" dir="rtl" className={`${yekan.variable} ${doran.variable}`}>
       <body>
         <AppProviders>{children}</AppProviders>
       </body>

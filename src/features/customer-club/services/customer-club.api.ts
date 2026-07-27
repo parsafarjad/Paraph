@@ -20,12 +20,17 @@ import { apiClient } from "@/shared/lib/api/client";
 import { unwrapApiPayload } from "@/shared/lib/api/response";
 import type { ApiEnvelope } from "@/shared/types/api";
 
-async function getPayload<T>(path: string, params?: Record<string, unknown>): Promise<T> {
+async function getPayload<T>(
+  path: string,
+  params?: Record<string, unknown>,
+): Promise<T> {
   const { data } = await apiClient.get<ApiEnvelope<T> | T>(path, { params });
   return unwrapApiPayload<T>(data);
 }
 
-export async function getDashboard(query: DashboardQuery): Promise<DashboardResponse> {
+export async function getDashboard(
+  query: DashboardQuery,
+): Promise<DashboardResponse> {
   const [userPayload, vitrinsPayload] = await Promise.all([
     getPayload<unknown>("/users/me"),
     getPayload<unknown>("/users/vitrin/all-user"),
@@ -43,7 +48,9 @@ export async function getDashboard(query: DashboardQuery): Promise<DashboardResp
     const fallbackVitrin = vitrins.find((item) => item.id === query.vitrinId);
     const [vitrinPayload, summaryPayload] = await Promise.all([
       getPayload<unknown>(`/users/vitrin/${encodedVitrinId}`),
-      getPayload<unknown>(`/customer-club/summary-user-vitrin/${encodedVitrinId}`),
+      getPayload<unknown>(
+        `/customer-club/summary-user-vitrin/${encodedVitrinId}`,
+      ),
     ]);
 
     return {
@@ -98,9 +105,7 @@ export async function getRecentActivities(
     offset: query.offset,
     size: query.size,
     ...(query.type === "ALL" ? {} : { type: query.type }),
-    ...(query.scope === "vitrin" && query.vitrinId
-      ? {}
-      : {}),
+    ...(query.scope === "vitrin" && query.vitrinId ? {} : {}),
   };
 
   const { data } = await axios.get<unknown>("/api/recent-activities", {

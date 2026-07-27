@@ -11,7 +11,8 @@ import {
 } from "@/features/customer-club/types/customer-club.types";
 
 const imageBaseUrl = (
-  process.env.NEXT_PUBLIC_IMAGE_BASE_URL ?? "https://wholesaler-core-develop.web.parafacc.ir"
+  process.env.NEXT_PUBLIC_IMAGE_BASE_URL ??
+  "https://wholesaler-core-develop.web.parafacc.ir"
 ).replace(/\/$/, "");
 
 type UnknownRecord = Record<string, unknown>;
@@ -96,13 +97,17 @@ export function normalizeUser(payload: unknown): UserProfile {
     level: text(get(record, "level", "levelName"), "بدون سطح"),
     coins: number(get(record, "coins", "coin", "coinAmount")),
     scores: number(get(record, "scores", "score", "scoreAmount")),
-    createdAt: text(get(record, "createdAt", "created_at", "joinDate")) || undefined,
+    createdAt:
+      text(get(record, "createdAt", "created_at", "joinDate")) || undefined,
     jobTitle:
-      text(get(record, "jobTitle", "occupation", "profession", "businessTitle")) || undefined,
+      text(
+        get(record, "jobTitle", "occupation", "profession", "businessTitle"),
+      ) || undefined,
     city: text(get(record, "city", "cityName")) || undefined,
     country: text(get(record, "country", "countryName")) || undefined,
     membershipTitle:
-      text(get(record, "membershipTitle", "businessType", "userTypeTitle")) || undefined,
+      text(get(record, "membershipTitle", "businessType", "userTypeTitle")) ||
+      undefined,
   };
 }
 
@@ -110,11 +115,18 @@ export function normalizeVitrinList(payload: unknown): UserVitrin[] {
   return arrayFromPayload(payload).map((item, index) => {
     const record = asRecord(item);
     const avatarValue =
-      get(record, "avatar", "avatarUrl", "image") ?? getNested(record, "file.link");
+      get(record, "avatar", "avatarUrl", "image") ??
+      getNested(record, "file.link");
     return {
-      id: id(get(record, "id", "_id", "userVitrinId", "vitrinId"), `vitrin-${index}`),
+      id: id(
+        get(record, "id", "_id", "userVitrinId", "vitrinId"),
+        `vitrin-${index}`,
+      ),
       role: role(get(record, "role", "userRole")),
-      companyName: text(get(record, "companyName", "name", "title"), `ویترین ${index + 1}`),
+      companyName: text(
+        get(record, "companyName", "name", "title"),
+        `ویترین ${index + 1}`,
+      ),
       avatarUrl: resolveImageUrl(avatarValue),
     };
   });
@@ -126,10 +138,14 @@ export function normalizeVitrin(
 ): VitrinProfile {
   const record = asRecord(payload);
   const avatarValue =
-    get(record, "avatar", "avatarUrl", "image") ?? getNested(record, "file.link");
+    get(record, "avatar", "avatarUrl", "image") ??
+    getNested(record, "file.link");
 
   return {
-    id: id(get(record, "id", "_id", "userVitrinId", "vitrinId"), fallback?.id ?? "vitrin"),
+    id: id(
+      get(record, "id", "_id", "userVitrinId", "vitrinId"),
+      fallback?.id ?? "vitrin",
+    ),
     companyName: text(
       get(record, "companyName", "name", "title"),
       fallback?.companyName ?? "ویترین پاراف",
@@ -143,31 +159,49 @@ export function normalizeVitrin(
 }
 
 export function normalizeLevels(payload: unknown): ClubLevel[] {
-  return arrayFromPayload(payload)
-    .map((item, index) => {
+  const levels = arrayFromPayload(payload).reduce<ClubLevel[]>(
+    (normalizedLevels, item, index) => {
       const record = asRecord(item);
       const status = get(record, "status", "isActive");
       const deletedAt = get(record, "deletedAt", "deleted_at");
 
-      if (status === false || (deletedAt !== undefined && deletedAt !== null)) {
-        return null;
+      const isInactive =
+        status === false || (deletedAt !== undefined && deletedAt !== null);
+
+      if (isInactive) {
+        return normalizedLevels;
       }
 
-      return {
+      const iconUrl = resolveImageUrl(
+        getNested(record, "file.link") ?? get(record, "icon", "iconUrl"),
+      );
+
+      const level: ClubLevel = {
         id: id(get(record, "id", "_id", "levelId"), `level-${index}`),
+
         name: text(get(record, "name", "title"), `سطح ${index + 1}`),
+
         scores: number(get(record, "scores", "score", "minimumScore")),
-        iconUrl: resolveImageUrl(getNested(record, "file.link") ?? get(record, "icon", "iconUrl")),
-      } satisfies ClubLevel;
-    })
-    .filter((level): level is ClubLevel => level !== null)
-    .sort((first, second) => first.scores - second.scores);
+
+        ...(iconUrl ? { iconUrl } : {}),
+      };
+
+      normalizedLevels.push(level);
+
+      return normalizedLevels;
+    },
+    [],
+  );
+
+  return levels.sort((first, second) => first.scores - second.scores);
 }
 
 export function normalizeSummary(payload: unknown): ClubSummary {
   const record = asRecord(payload);
   return {
-    numberTasksCompleted: number(get(record, "numberTasksCompleted", "tasksCompleted")),
+    numberTasksCompleted: number(
+      get(record, "numberTasksCompleted", "tasksCompleted"),
+    ),
     totalScoreMonthly: number(get(record, "totalScoreMonthly", "monthlyScore")),
     totalCoinMonthly: number(get(record, "totalCoinMonthly", "monthlyCoin")),
   };
@@ -175,7 +209,9 @@ export function normalizeSummary(payload: unknown): ClubSummary {
 
 function normalizeActivityType(value: unknown) {
   const candidate = text(value, RecentActivitiesTypeEnum.BOTH).toUpperCase();
-  return Object.values(RecentActivitiesTypeEnum).includes(candidate as RecentActivitiesTypeEnum)
+  return Object.values(RecentActivitiesTypeEnum).includes(
+    candidate as RecentActivitiesTypeEnum,
+  )
     ? (candidate as RecentActivitiesTypeEnum)
     : candidate;
 }
@@ -203,23 +239,31 @@ export function normalizeActivities(
   const itemsPayload = Array.isArray(payload)
     ? payload
     : get(root, "items", "rows", "list", "data", "result");
-  const items = (Array.isArray(itemsPayload) ? itemsPayload : []).map<RecentActivity>(
-    (item, index) => {
-      const record = asRecord(item);
-      return {
-        id: id(get(record, "id", "_id", "activityId"), `activity-${offset + index}`),
-        type: normalizeActivityType(get(record, "type", "Type")),
-        taskTitle: text(get(record, "taskTitle", "title"), "فعالیت باشگاه مشتریان"),
-        taskDescription: text(get(record, "taskDescription", "description")),
-        scoreAmount: number(get(record, "scoreAmount", "score")),
-        coinAmount: number(get(record, "coinAmount", "coin")),
-        createdAt: text(get(record, "createdAt", "created_at", "date")) || undefined,
-      };
-    },
-  );
+  const items = (
+    Array.isArray(itemsPayload) ? itemsPayload : []
+  ).map<RecentActivity>((item, index) => {
+    const record = asRecord(item);
+    return {
+      id: id(
+        get(record, "id", "_id", "activityId"),
+        `activity-${offset + index}`,
+      ),
+      type: normalizeActivityType(get(record, "type", "Type")),
+      taskTitle: text(
+        get(record, "taskTitle", "title"),
+        "فعالیت باشگاه مشتریان",
+      ),
+      taskDescription: text(get(record, "taskDescription", "description")),
+      scoreAmount: number(get(record, "scoreAmount", "score")),
+      coinAmount: number(get(record, "coinAmount", "coin")),
+      createdAt:
+        text(get(record, "createdAt", "created_at", "date")) || undefined,
+    };
+  });
 
   const explicitTotal = get(root, "total", "count", "totalCount");
-  const hasExplicitTotal = explicitTotal !== undefined && explicitTotal !== null;
+  const hasExplicitTotal =
+    explicitTotal !== undefined && explicitTotal !== null;
   const total = hasExplicitTotal
     ? normalizeActivitiesTotal(explicitTotal, offset + items.length)
     : offset + items.length;
@@ -229,7 +273,9 @@ export function normalizeActivities(
     total,
     offset,
     size,
-    hasMore: hasExplicitTotal ? offset + items.length < total : items.length === size,
+    hasMore: hasExplicitTotal
+      ? offset + items.length < total
+      : items.length === size,
   };
 }
 

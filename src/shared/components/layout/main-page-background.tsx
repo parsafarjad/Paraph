@@ -7,7 +7,10 @@ interface MainPageBackgroundProps extends PropsWithChildren {
   className?: string;
 }
 
-export function MainPageBackground({ children, className }: MainPageBackgroundProps) {
+export function MainPageBackground({
+  children,
+  className,
+}: MainPageBackgroundProps) {
   return (
     <main
       className={cn(
@@ -23,7 +26,7 @@ export function MainPageBackground({ children, className }: MainPageBackgroundPr
         height={1539}
         priority
         sizes="(min-width: 1920px) 2301px, 120vw"
-        className="pointer-events-none absolute left-0 top-[-194px] z-0 hidden h-[1540px] w-[2301px] max-w-none select-none object-fill min-[1100px]:block"
+        className="pointer-events-none absolute top-[-194px] left-0 z-0 hidden h-[1540px] w-[2301px] max-w-none object-fill select-none min-[1100px]:block"
       />
 
       <div className="relative z-10">{children}</div>

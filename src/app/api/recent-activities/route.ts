@@ -11,11 +11,7 @@ export const dynamic = "force-dynamic";
 const RECENT_ACTIVITIES_URL =
   "https://wholesaler-core-v2.paraf.app/api/recent-activities";
 
-const ALLOWED_QUERY_PARAMETERS = [
-  "offset",
-  "size",
-  "type",
-] as const;
+const ALLOWED_QUERY_PARAMETERS = ["offset", "size", "type"] as const;
 
 function createUpstreamUrl(request: NextRequest) {
   const upstreamUrl = new URL(RECENT_ACTIVITIES_URL);

@@ -11,9 +11,11 @@ const buttonVariants = cva(
       variant: {
         primary:
           "bg-sky-500 text-white shadow-[0_8px_24px_rgba(14,165,233,0.28)] hover:-translate-y-0.5 hover:bg-sky-600",
-        secondary: "border border-sky-300 bg-white text-sky-700 hover:bg-sky-50",
+        secondary:
+          "border border-sky-300 bg-white text-sky-700 hover:bg-sky-50",
         ghost: "text-slate-600 hover:bg-slate-100 hover:text-slate-950",
-        violet: "bg-violet-600 text-white shadow-lg shadow-violet-200 hover:bg-violet-700",
+        violet:
+          "bg-violet-600 text-white shadow-lg shadow-violet-200 hover:bg-violet-700",
       },
       size: {
         sm: "h-9 px-4",
@@ -30,12 +32,24 @@ const buttonVariants = cva(
 );
 
 interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
-export function Button({ className, variant, size, asChild, ...props }: ButtonProps) {
+export function Button({
+  className,
+  variant,
+  size,
+  asChild,
+  ...props
+}: ButtonProps) {
   const Component = asChild ? Slot : "button";
-  return <Component className={cn(buttonVariants({ variant, size }), className)} {...props} />;
+  return (
+    <Component
+      className={cn(buttonVariants({ variant, size }), className)}
+      {...props}
+    />
+  );
 }

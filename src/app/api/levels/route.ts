@@ -55,17 +55,14 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const LEVELS_URL =
-  "https://wholesaler-core-v2.paraf.app/api/levels";
+const LEVELS_URL = "https://wholesaler-core-v2.paraf.app/api/levels";
 
 interface UpstreamResponse {
   status: number;
   body: string;
 }
 
-function requestLevels(
-  authorization: string,
-): Promise<UpstreamResponse> {
+function requestLevels(authorization: string): Promise<UpstreamResponse> {
   return new Promise((resolve, reject) => {
     const url = new URL(LEVELS_URL);
 
@@ -100,9 +97,7 @@ function requestLevels(
     );
 
     upstreamRequest.setTimeout(20_000, () => {
-      upstreamRequest.destroy(
-        new Error("Levels request timed out."),
-      );
+      upstreamRequest.destroy(new Error("Levels request timed out."));
     });
 
     upstreamRequest.on("error", reject);
@@ -112,10 +107,7 @@ function requestLevels(
   });
 }
 
-function parseResponseBody(
-  body: string,
-  status: number,
-): unknown {
+function parseResponseBody(body: string, status: number): unknown {
   if (!body.trim()) {
     return {
       success: false,
@@ -142,8 +134,7 @@ function parseResponseBody(
 }
 
 export async function GET(request: Request) {
-  const authorization =
-    request.headers.get("authorization");
+  const authorization = request.headers.get("authorization");
 
   if (!authorization?.startsWith("Bearer ")) {
     return NextResponse.json(
@@ -162,14 +153,10 @@ export async function GET(request: Request) {
   }
 
   try {
-    const upstreamResponse =
-      await requestLevels(authorization);
+    const upstreamResponse = await requestLevels(authorization);
 
     return NextResponse.json(
-      parseResponseBody(
-        upstreamResponse.body,
-        upstreamResponse.status,
-      ),
+      parseResponseBody(upstreamResponse.body, upstreamResponse.status),
       {
         status: upstreamResponse.status,
         headers: {
@@ -178,10 +165,7 @@ export async function GET(request: Request) {
       },
     );
   } catch (error) {
-    console.error(
-      "Levels upstream request failed:",
-      error,
-    );
+    console.error("Levels upstream request failed:", error);
 
     return NextResponse.json(
       {
@@ -189,8 +173,7 @@ export async function GET(request: Request) {
         error: {
           code: 502,
           httpCode: 502,
-          message:
-            "سرویس سطح‌ها موقتاً در دسترس نیست.",
+          message: "سرویس سطح‌ها موقتاً در دسترس نیست.",
         },
       },
       {

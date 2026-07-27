@@ -27,13 +27,17 @@ type HeaderIconButtonProps = {
   className?: string;
 };
 
-function HeaderIconButton({ label, children, className }: HeaderIconButtonProps) {
+function HeaderIconButton({
+  label,
+  children,
+  className,
+}: HeaderIconButtonProps) {
   return (
     <button
       type="button"
       aria-label={label}
       className={cn(
-        "grid size-10 place-items-center rounded-lg text-[#15181a] transition-colors hover:bg-[#f5f7f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#19a7e5]/35",
+        "grid size-10 place-items-center rounded-lg text-[#15181a] transition-colors hover:bg-[#f5f7f7] focus-visible:ring-2 focus-visible:ring-[#19a7e5]/35 focus-visible:outline-none",
         className,
       )}
     >
@@ -50,7 +54,7 @@ export function SiteHeader() {
           <Link
             href="/"
             aria-label="صفحه اصلی پاراف"
-            className="relative block h-[49px] w-[174px] shrink-0 " 
+            className="relative block h-[49px] w-[174px] shrink-0"
           >
             <Image
               src="/assets/paraf-brand.svg"
@@ -62,12 +66,15 @@ export function SiteHeader() {
             />
           </Link>
 
-          <nav aria-label="ناوبری اصلی" className="hidden items-center gap-9 xl:flex">
+          <nav
+            aria-label="ناوبری اصلی"
+            className="hidden items-center gap-9 xl:flex"
+          >
             {navigationItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="group flex h-10 items-center gap-1.5 whitespace-nowrap text-[16px] font-medium leading-7 text-[#667880] transition-colors hover:text-[#15181a]"
+                className="group flex h-10 items-center gap-1.5 text-[16px] leading-7 font-medium whitespace-nowrap text-[#667880] transition-colors hover:text-[#15181a]"
               >
                 <span>{item.label}</span>
                 {item.hasMenu ? (
@@ -82,7 +89,10 @@ export function SiteHeader() {
         </div>
 
         <label className="mx-6 hidden h-10 w-[350px] shrink-0 items-center rounded-full border border-[#c2c9cc] bg-[#ecf0f2] px-4 shadow-[inset_0_1px_2px_rgba(21,24,26,0.04)] lg:flex">
-          <Search aria-hidden="true" className="size-5 shrink-0 stroke-[1.6] text-[#667880]" />
+          <Search
+            aria-hidden="true"
+            className="size-5 shrink-0 stroke-[1.6] text-[#667880]"
+          />
           <input
             type="search"
             aria-label="جستجو در آگهی‌ها"
@@ -109,7 +119,7 @@ export function SiteHeader() {
           <Link
             dir="rtl"
             href="#"
-            className="inline-flex h-10 items-center whitespace-nowrap px-3 text-[16px] font-bold text-[#15181a] transition-colors hover:text-[#0f6489]"
+            className="inline-flex h-10 items-center px-3 text-[16px] font-bold whitespace-nowrap text-[#15181a] transition-colors hover:text-[#0f6489]"
           >
             ثبت آگهی جدید
           </Link>
@@ -117,10 +127,13 @@ export function SiteHeader() {
           <button
             type="button"
             dir="rtl"
-            className="flex h-10 items-center gap-2 whitespace-nowrap px-3 text-[14px] font-medium text-[#a3aeb3] transition-colors hover:text-[#667880]"
+            className="flex h-10 items-center gap-2 px-3 text-[14px] font-medium whitespace-nowrap text-[#a3aeb3] transition-colors hover:text-[#667880]"
             aria-label="انتخاب زبان و واحد پول"
           >
-            <Languages aria-hidden="true" className="size-[18px] stroke-[1.6]" />
+            <Languages
+              aria-hidden="true"
+              className="size-[18px] stroke-[1.6]"
+            />
             <span>فارسی / IRT</span>
           </button>
         </div>

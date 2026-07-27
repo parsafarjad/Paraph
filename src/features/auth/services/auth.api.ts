@@ -6,10 +6,13 @@ import { unwrapApiPayload } from "@/shared/lib/api/response";
 import type { ApiSuccessResponse } from "@/shared/types/api";
 
 export async function login(input: LoginInput): Promise<LoginResult> {
-  const { data } = await apiClient.post<ApiSuccessResponse<LoginResult>>("/users/login", {
-    phone: normalizeIranianPhone(input.phone),
-    password: input.password,
-  });
+  const { data } = await apiClient.post<ApiSuccessResponse<LoginResult>>(
+    "/users/login",
+    {
+      phone: normalizeIranianPhone(input.phone),
+      password: input.password,
+    },
+  );
 
   const result = unwrapApiPayload<LoginResult>(data);
 

@@ -5,11 +5,8 @@ import {
   ArrowLeftRight,
   Coins,
   Eye,
-  Gift,
   LoaderCircle,
-  MinusCircle,
   Sparkles,
-  Trophy,
   Zap,
 } from "lucide-react";
 
@@ -64,7 +61,11 @@ function formatActivityTimestamp(value?: string) {
   }
 
   const now = new Date();
-  const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  const startOfToday = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+  ).getTime();
   const startOfActivityDay = new Date(
     date.getFullYear(),
     date.getMonth(),
@@ -93,17 +94,22 @@ export function RecentActivities({
   onLoadMore,
 }: RecentActivitiesProps) {
   const activityType = useCustomerClubStore((state) => state.activityType);
-  const setActivityType = useCustomerClubStore((state) => state.setActivityType);
+  const setActivityType = useCustomerClubStore(
+    (state) => state.setActivityType,
+  );
 
   return (
     <section aria-labelledby="recent-activities-title" className="min-w-0">
       <div className="flex min-h-[92px] flex-col items-end gap-6">
-        <div dir="ltr" className="flex w-full flex-col gap-4 lg:h-[43px] lg:flex-row lg:items-center lg:justify-between">
+        <div
+          dir="ltr"
+          className="flex w-full flex-col gap-4 lg:h-[43px] lg:flex-row lg:items-center lg:justify-between"
+        >
           <button
             type="button"
             onClick={hasNextPage ? onLoadMore : undefined}
             aria-disabled={!hasNextPage || isFetchingNextPage}
-            className="inline-flex h-[33px] shrink-0 items-center gap-2 self-start rounded-lg px-2 text-[14px] font-bold leading-[25px] text-[#15181a] outline-none transition hover:bg-[#f5f7f7] focus-visible:ring-2 focus-visible:ring-[#19a7e5]/35 disabled:cursor-default"
+            className="inline-flex h-[33px] shrink-0 items-center gap-2 self-start rounded-lg px-2 text-[14px] leading-[25px] font-bold text-[#15181a] transition outline-none hover:bg-[#f5f7f7] focus-visible:ring-2 focus-visible:ring-[#19a7e5]/35 disabled:cursor-default"
             disabled={isFetchingNextPage}
           >
             {isFetchingNextPage ? (
@@ -114,10 +120,13 @@ export function RecentActivities({
             لیست کامل
           </button>
 
-          <div dir="rtl" className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center">
+          <div
+            dir="rtl"
+            className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center"
+          >
             <h2
               id="recent-activities-title"
-              className="shrink-0 text-[24px] font-bold leading-[37px] tracking-[-0.18px] text-[#15181a]"
+              className="shrink-0 text-[24px] leading-[37px] font-bold tracking-[-0.18px] text-[#15181a]"
             >
               فعالیت‌های اخیر
             </h2>
@@ -125,15 +134,17 @@ export function RecentActivities({
             <Tabs.Root
               dir="rtl"
               value={activityType}
-              onValueChange={(value) => setActivityType(value as RecentActivitiesFilter)}
+              onValueChange={(value) =>
+                setActivityType(value as RecentActivitiesFilter)
+              }
               className="min-w-0"
             >
-              <Tabs.List className="flex h-[43px] max-w-full items-center overflow-x-auto rounded-full border border-black/10 bg-[#ecf0f2] p-[6px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <Tabs.List className="flex h-[43px] max-w-full [scrollbar-width:none] items-center overflow-x-auto rounded-full border border-black/10 bg-[#ecf0f2] p-[6px] [&::-webkit-scrollbar]:hidden">
                 {filters.map(([value, label]) => (
                   <Tabs.Trigger
                     key={value}
                     value={value}
-                    className="h-[30px] shrink-0 rounded-full px-3 text-[12px] font-normal leading-none tracking-[-0.09px] text-[#15181a] outline-none transition data-[state=active]:border data-[state=active]:border-[#15181a] data-[state=active]:bg-white data-[state=active]:font-bold"
+                    className="h-[30px] shrink-0 rounded-full px-3 text-[12px] leading-none font-normal tracking-[-0.09px] text-[#15181a] transition outline-none data-[state=active]:border data-[state=active]:border-[#15181a] data-[state=active]:bg-white data-[state=active]:font-bold"
                   >
                     {label}
                   </Tabs.Trigger>
@@ -171,7 +182,10 @@ function RecentActivitiesSkeleton() {
   return (
     <div className="space-y-1">
       {Array.from({ length: 10 }).map((_, index) => (
-        <Skeleton key={index} className="h-[52px] w-full rounded-full bg-[#edf0f1]" />
+        <Skeleton
+          key={index}
+          className="h-[52px] w-full rounded-full bg-[#edf0f1]"
+        />
       ))}
     </div>
   );
@@ -239,32 +253,14 @@ function ActivityRow({ activity }: { activity: RecentActivity }) {
     <article
       dir="ltr"
       className={cn(
-        `
-          group relative isolate
-          grid h-[52px]
-          grid-cols-[minmax(0,1fr)_auto_40px]
-          items-center gap-3
-          overflow-hidden rounded-full
-          border border-transparent
-          bg-[#f5f7f7] p-2
-
-          transition-[border-color,box-shadow]
-          duration-300 ease-out
-
-          sm:grid-cols-[120px_58px_minmax(0,1fr)_100px_40px]
-          sm:px-2
-        `,
+        `group relative isolate grid h-[52px] grid-cols-[minmax(0,1fr)_auto_40px] items-center gap-3 overflow-hidden rounded-full border border-transparent bg-[#f5f7f7] p-2 transition-[border-color,box-shadow] duration-300 ease-out sm:grid-cols-[120px_58px_minmax(0,1fr)_100px_40px] sm:px-2`,
         config.hoverBorderClassName,
       )}
     >
       {/* Animated hover background */}
       <span
         aria-hidden="true"
-        className="
-          pointer-events-none absolute inset-0 z-0 rounded-full
-          opacity-0 transition-opacity duration-300 ease-out
-          group-hover:opacity-100
-        "
+        className="pointer-events-none absolute inset-0 z-0 rounded-full opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
         style={{
           background: config.hoverBackground,
         }}
@@ -272,43 +268,21 @@ function ActivityRow({ activity }: { activity: RecentActivity }) {
 
       <time
         dir="rtl"
-        className="
-          relative z-10 hidden items-center whitespace-nowrap
-          text-[9px] font-medium text-[#9aa3a9]
-          transition-colors duration-300
-          sm:flex
-        "
+        className="relative z-10 hidden items-center text-[9px] font-medium whitespace-nowrap text-[#9aa3a9] transition-colors duration-300 sm:flex"
       >
         {formatActivityTimestamp(activity.createdAt)}
       </time>
 
       <span
         dir="rtl"
-        className="
-          relative z-10 hidden h-6 items-center justify-center
-          rounded-full border border-transparent
-          bg-[#f0f2f3] px-2
-          text-[9px] font-bold text-[#31363a]
-
-          transition-[background-color,border-color,box-shadow]
-          duration-300 ease-out
-
-          group-hover:border-[#859196]
-          group-hover:bg-white/90
-          group-hover:shadow-[0_2px_7px_rgba(42,57,63,0.08)]
-
-          sm:flex
-        "
+        className="relative z-10 hidden h-6 items-center justify-center rounded-full border border-transparent bg-[#f0f2f3] px-2 text-[9px] font-bold text-[#31363a] transition-[background-color,border-color,box-shadow] duration-300 ease-out group-hover:border-[#859196] group-hover:bg-white/90 group-hover:shadow-[0_2px_7px_rgba(42,57,63,0.08)] sm:flex"
       >
         موفق
       </span>
 
       <p
         dir="rtl"
-        className="
-          relative z-10 min-w-0 truncate text-right
-          text-[11px] font-medium leading-6 text-[#303438]
-        "
+        className="relative z-10 min-w-0 truncate text-right text-[11px] leading-6 font-medium text-[#303438]"
         title={description}
       >
         {description}
@@ -317,18 +291,7 @@ function ActivityRow({ activity }: { activity: RecentActivity }) {
       <div
         dir="rtl"
         className={cn(
-          `
-            relative z-10
-            flex min-w-[84px] flex-col
-            items-start justify-center
-            whitespace-nowrap text-right
-            text-[11px] font-black leading-[18px]
-            text-[#17191b]
-
-            transition-colors duration-300 ease-out
-
-            sm:min-w-0
-          `,
+          `relative z-10 flex min-w-[84px] flex-col items-start justify-center text-right text-[11px] leading-[18px] font-black whitespace-nowrap text-[#17191b] transition-colors duration-300 ease-out sm:min-w-0`,
           config.amountHoverClassName,
         )}
       >
@@ -340,16 +303,7 @@ function ActivityRow({ activity }: { activity: RecentActivity }) {
       <span
         aria-hidden="true"
         className={cn(
-          `
-            relative z-10 grid size-9 place-items-center
-            rounded-full bg-white
-
-            transition-[color,background-color,transform,box-shadow]
-            duration-300 ease-out
-            will-change-transform
-
-            group-hover:scale-[1.06]
-          `,
+          `relative z-10 grid size-9 place-items-center rounded-full bg-white transition-[color,background-color,transform,box-shadow] duration-300 ease-out will-change-transform group-hover:scale-[1.06]`,
           config.iconClassName,
           config.iconHoverClassName,
         )}

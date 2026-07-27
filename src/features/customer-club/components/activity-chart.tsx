@@ -42,7 +42,10 @@ function getLastSixPersianMonths() {
 }
 
 function getActivityValue(activity: RecentActivity) {
-  return Math.max(0, Math.abs(activity.scoreAmount) + Math.abs(activity.coinAmount));
+  return Math.max(
+    0,
+    Math.abs(activity.scoreAmount) + Math.abs(activity.coinAmount),
+  );
 }
 
 function buildChartData(activities: RecentActivity[]): ActivityChartPoint[] {
@@ -84,7 +87,9 @@ function getTrend(data: ActivityChartPoint[]) {
     };
   }
 
-  const percent = Math.round((Math.abs(currentValue - previousValue) / previousValue) * 100);
+  const percent = Math.round(
+    (Math.abs(currentValue - previousValue) / previousValue) * 100,
+  );
 
   return {
     percent,
@@ -116,26 +121,27 @@ function YAxisTick({
         strokeLinejoin="round"
         strokeWidth="1"
       />
-      <text
-        x={-21}
-        y={3.5}
-        fill="#6f7881"
-        fontSize="10"
-        textAnchor="end"
-      >
+      <text x={-21} y={3.5} fill="#6f7881" fontSize="10" textAnchor="end">
         {formatNumber(payload?.value ?? 0)}
       </text>
     </g>
   );
 }
 
-export function ActivityChart({ activities }: { activities: RecentActivity[] }) {
+export function ActivityChart({
+  activities,
+}: {
+  activities: RecentActivity[];
+}) {
   const rawData = buildChartData(activities);
   const hasActivityData = rawData.some((item) => item.value > 0);
   const fallbackValues = [25, 27, 80, 49, 55, 36];
   const data = hasActivityData
     ? rawData
-    : rawData.map((item, index) => ({ ...item, value: fallbackValues[index] ?? 0 }));
+    : rawData.map((item, index) => ({
+        ...item,
+        value: fallbackValues[index] ?? 0,
+      }));
   const trend = getTrend(data);
   const highestValue = Math.max(...data.map((item) => item.value), 0);
   const yAxisMaximum = Math.max(100, Math.ceil(highestValue / 20) * 20);
@@ -144,13 +150,13 @@ export function ActivityChart({ activities }: { activities: RecentActivity[] }) 
     <section aria-labelledby="activity-chart-title" className="w-full">
       <h2
         id="activity-chart-title"
-        className="mb-3 h-[37px] text-right text-[24px] font-bold leading-[37px] tracking-[-0.18px] text-[#15181a]"
+        className="mb-3 h-[37px] text-right text-[24px] leading-[37px] font-bold tracking-[-0.18px] text-[#15181a]"
       >
         نمودار فعالیت‌ها
       </h2>
 
       <div className="min-h-[154px] rounded-[12px] bg-[#ecf0f2] px-6 py-3 text-right">
-        <p className="text-[13px] font-semibold leading-7 text-[#31363b]">
+        <p className="text-[13px] leading-7 font-semibold text-[#31363b]">
           اخیراً کم‌فعالیت بودی؛
           <br />
           برای حفظ سطح برنزی، بیشتر مشارکت کن! 👀
@@ -180,7 +186,7 @@ export function ActivityChart({ activities }: { activities: RecentActivity[] }) 
         نمودار تغییرات امتیاز بر اساس فعالیت ۶ ماه شما
       </p>
 
-      <p className="mt-2 text-center text-[16px] font-semibold leading-[30px] tracking-[-0.12px] text-[#15181a]">
+      <p className="mt-2 text-center text-[16px] leading-[30px] font-semibold tracking-[-0.12px] text-[#15181a]">
         فعالیت شما نسبت به ماه گذشته{" "}
         {trend.direction === "same" ? (
           <span className="font-black text-[#00aaf1]">بدون تغییر</span>
@@ -193,7 +199,8 @@ export function ActivityChart({ activities }: { activities: RecentActivity[] }) 
                   : "font-black text-[#22b888]"
               }
             >
-              %{formatNumber(trend.percent)} {trend.direction === "down" ? "کاهش" : "افزایش"}
+              %{formatNumber(trend.percent)}{" "}
+              {trend.direction === "down" ? "کاهش" : "افزایش"}
             </span>{" "}
             یافته.
           </>
@@ -207,7 +214,13 @@ export function ActivityChart({ activities }: { activities: RecentActivity[] }) 
             margin={{ top: 8, right: 34, bottom: 4, left: 38 }}
           >
             <defs>
-              <linearGradient id="activityLineGradient" x1="0" y1="0" x2="1" y2="0">
+              <linearGradient
+                id="activityLineGradient"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="0"
+              >
                 <stop offset="0%" stopColor="#f43d3d" />
                 <stop offset="48%" stopColor="#2bc596" />
                 <stop offset="68%" stopColor="#69a79d" />
@@ -241,7 +254,12 @@ export function ActivityChart({ activities }: { activities: RecentActivity[] }) 
               stroke="url(#activityLineGradient)"
               strokeWidth={2}
               dot={false}
-              activeDot={{ r: 4, fill: "#22b888", stroke: "#ffffff", strokeWidth: 2 }}
+              activeDot={{
+                r: 4,
+                fill: "#22b888",
+                stroke: "#ffffff",
+                strokeWidth: 2,
+              }}
               animationDuration={700}
             />
           </LineChart>

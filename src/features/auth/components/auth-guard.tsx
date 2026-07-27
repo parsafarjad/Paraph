@@ -9,7 +9,10 @@ import { useAuthStore } from "@/features/auth/store/auth.store";
 
 function FullPageLoader() {
   return (
-    <main className="grid min-h-screen place-items-center bg-[#e6e5ff]" aria-live="polite">
+    <main
+      className="grid min-h-screen place-items-center bg-[#e6e5ff]"
+      aria-live="polite"
+    >
       <div className="flex items-center gap-3 rounded-2xl bg-white px-5 py-4 text-sm font-bold text-slate-700 shadow-lg">
         <LoaderCircle className="size-5 animate-spin text-sky-600" />
         در حال بررسی نشست کاربری...

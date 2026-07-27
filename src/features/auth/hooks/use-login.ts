@@ -22,7 +22,12 @@ export function useLogin() {
       router.replace("/");
     },
     onError: (error) => {
-      toast.error(getRequestErrorMessage(error, "ورود ناموفق بود. اطلاعات را بررسی کنید."));
+      toast.error(
+        getRequestErrorMessage(
+          error,
+          "ورود ناموفق بود. اطلاعات را بررسی کنید.",
+        ),
+      );
     },
   });
 }

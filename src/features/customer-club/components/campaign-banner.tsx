@@ -4,7 +4,7 @@ export function CampaignBanner() {
   return (
     <section
       aria-label="کمپین جشن سالگرد اکسیژن"
-      className="relative h-[180px] w-full overflow-hidden bg-[#0a1659] sm:h-[280px] min-[1200px]:h-[284px]"
+      className="relative h-[180px] w-full overflow-hidden bg-[#0a1659] min-[1200px]:h-[284px] sm:h-[280px]"
     >
       <Image
         src="/assets/banner.png"

@@ -42,13 +42,18 @@ export function CustomerClubPage() {
   });
 
   useEffect(() => {
-    if (scope === "vitrin" && dashboardQuery.data && !dashboardQuery.data.selectedVitrin) {
+    if (
+      scope === "vitrin" &&
+      dashboardQuery.data &&
+      !dashboardQuery.data.selectedVitrin
+    ) {
       setUserScope();
     }
   }, [dashboardQuery.data, scope, setUserScope]);
 
   const dashboard = dashboardQuery.data;
-  const activities = activitiesQuery.data?.pages.flatMap((page) => page.items) ?? [];
+  const activities =
+    activitiesQuery.data?.pages.flatMap((page) => page.items) ?? [];
 
   return (
     <div dir="rtl" className="min-h-screen bg-white text-[#15181a]">
@@ -101,8 +106,12 @@ export function CustomerClubPage() {
                 <PageContainer className="flex min-h-[392px] items-start justify-center pt-10">
                   <LevelProgress
                     levels={levelsQuery.data}
-                    score={dashboard.selectedVitrin?.scores ?? dashboard.user.scores}
-                    isLoading={levelsQuery.isLoading && levelsQuery.data.length === 0}
+                    score={
+                      dashboard.selectedVitrin?.scores ?? dashboard.user.scores
+                    }
+                    isLoading={
+                      levelsQuery.isLoading && levelsQuery.data.length === 0
+                    }
                     isError={levelsQuery.isBlockingError}
                     error={levelsQuery.error}
                     onRetry={() => void levelsQuery.refetch()}
@@ -145,68 +154,33 @@ export function CustomerClubPage() {
           </PageContainer>
         </section> */}
 
-<section className="mt-4 sm:mt-6 min-[1760px]:h-[832px]">
-  <PageContainer
-    dir="ltr"
-    className="
-      grid min-w-0 grid-cols-1 items-start
-      gap-4 py-6
+        <section className="mt-4 min-[1760px]:h-[832px] sm:mt-6">
+          <PageContainer
+            dir="ltr"
+            className="grid min-w-0 grid-cols-1 items-start gap-4 py-6 min-[1760px]:h-[832px] min-[1760px]:grid-cols-[650px_1006px] min-[1760px]:py-10 sm:gap-6 sm:py-8 xl:grid-cols-[minmax(360px,650px)_minmax(0,1fr)]"
+          >
+            <div
+              dir="rtl"
+              className="min-w-0 rounded-[20px] bg-white px-4 py-5 min-[1760px]:h-[752px] min-[1760px]:px-12 min-[1760px]:py-10 sm:rounded-[24px] sm:px-6 sm:py-8 md:px-8 xl:min-h-[620px]"
+            >
+              <ActivityChart activities={activities} />
+            </div>
 
-      sm:gap-6 sm:py-8
-
-      xl:grid-cols-[minmax(360px,650px)_minmax(0,1fr)]
-
-      min-[1760px]:h-[832px]
-      min-[1760px]:grid-cols-[650px_1006px]
-      min-[1760px]:py-10
-    "
-  >
-    <div
-      dir="rtl"
-      className="
-        min-w-0 rounded-[20px] bg-white
-        px-4 py-5
-
-        sm:rounded-[24px] sm:px-6 sm:py-8
-        md:px-8
-
-        xl:min-h-[620px]
-
-        min-[1760px]:h-[752px]
-        min-[1760px]:px-12
-        min-[1760px]:py-10
-      "
-    >
-      <ActivityChart activities={activities} />
-    </div>
-
-    <div
-      dir="rtl"
-      className="
-        min-w-0 rounded-[20px] bg-white
-        px-3 py-5
-
-        sm:rounded-[24px] sm:px-6 sm:py-8
-        md:px-8
-
-        xl:min-h-[620px]
-
-        min-[1760px]:h-[752px]
-        min-[1760px]:px-12
-        min-[1760px]:py-10
-      "
-    >
-      <RecentActivities
-        items={activities}
-        isLoading={activitiesQuery.isLoading}
-        isFetching={activitiesQuery.isFetching}
-        hasNextPage={activitiesQuery.hasNextPage}
-        isFetchingNextPage={activitiesQuery.isFetchingNextPage}
-        onLoadMore={() => void activitiesQuery.fetchNextPage()}
-      />
-    </div>
-  </PageContainer>
-</section>
+            <div
+              dir="rtl"
+              className="min-w-0 rounded-[20px] bg-white px-3 py-5 min-[1760px]:h-[752px] min-[1760px]:px-12 min-[1760px]:py-10 sm:rounded-[24px] sm:px-6 sm:py-8 md:px-8 xl:min-h-[620px]"
+            >
+              <RecentActivities
+                items={activities}
+                isLoading={activitiesQuery.isLoading}
+                isFetching={activitiesQuery.isFetching}
+                hasNextPage={activitiesQuery.hasNextPage}
+                isFetchingNextPage={activitiesQuery.isFetchingNextPage}
+                onLoadMore={() => void activitiesQuery.fetchNextPage()}
+              />
+            </div>
+          </PageContainer>
+        </section>
 
         <div className="mt-10">
           <FeatureGrid />

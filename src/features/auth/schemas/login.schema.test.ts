@@ -4,7 +4,10 @@ import { loginSchema, normalizeIranianPhone } from "./login.schema";
 
 describe("loginSchema", () => {
   it("accepts the API phone format", () => {
-    expect(loginSchema.safeParse({ phone: "989121234567", password: "secret1" }).success).toBe(true);
+    expect(
+      loginSchema.safeParse({ phone: "989121234567", password: "secret1" })
+        .success,
+    ).toBe(true);
   });
 
   it("normalizes local Iranian mobile numbers", () => {

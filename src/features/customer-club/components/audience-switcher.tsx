@@ -19,7 +19,8 @@ export function AudienceSwitcher({ vitrins }: AudienceSwitcherProps) {
   const setUserScope = useCustomerClubStore((state) => state.setUserScope);
   const setVitrinScope = useCustomerClubStore((state) => state.setVitrinScope);
 
-  const selectedValue = scope === "vitrin" && vitrinId ? `vitrin:${vitrinId}` : "user";
+  const selectedValue =
+    scope === "vitrin" && vitrinId ? `vitrin:${vitrinId}` : "user";
 
   return (
     <section
@@ -28,29 +29,32 @@ export function AudienceSwitcher({ vitrins }: AudienceSwitcherProps) {
     >
       <PageContainer
         dir="ltr"
-        className="flex min-h-[56px] flex-col justify-center gap-4 py-2 md:flex-row md:items-center md:justify-between min-[1440px]:px-10 min-[1440px]:py-1"
+        className="flex min-h-[56px] flex-col justify-center gap-4 py-2 min-[1440px]:px-10 min-[1440px]:py-1 md:flex-row md:items-center md:justify-between"
       >
         <nav
           dir="rtl"
           aria-label="راهنمای باشگاه مشتریان"
-          className="flex items-center gap-8 text-[14px] font-bold leading-[25px] text-[#15181a] min-[1440px]:gap-10"
+          className="flex items-center gap-8 text-[14px] leading-[25px] font-bold text-[#15181a] min-[1440px]:gap-10"
         >
           <Link
             href="#faq"
-            className="rounded-md outline-none transition-colors hover:text-[#0f6489] focus-visible:ring-2 focus-visible:ring-[#19a7e5]/40"
+            className="rounded-md transition-colors outline-none hover:text-[#0f6489] focus-visible:ring-2 focus-visible:ring-[#19a7e5]/40"
           >
             سوالات متداول شما
           </Link>
           <Link
             href="#rules"
-            className="rounded-md outline-none transition-colors hover:text-[#0f6489] focus-visible:ring-2 focus-visible:ring-[#19a7e5]/40"
+            className="rounded-md transition-colors outline-none hover:text-[#0f6489] focus-visible:ring-2 focus-visible:ring-[#19a7e5]/40"
           >
             قوانین و مقررات
           </Link>
         </nav>
 
-        <div dir="rtl" className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center sm:gap-2">
-          <p className="shrink-0 text-[14px] font-semibold leading-[25px] text-[#15181a]">
+        <div
+          dir="rtl"
+          className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center sm:gap-2"
+        >
+          <p className="shrink-0 text-[14px] leading-[25px] font-semibold text-[#15181a]">
             انتخاب باشگاه مشتریان:
           </p>
 
@@ -69,7 +73,7 @@ export function AudienceSwitcher({ vitrins }: AudienceSwitcherProps) {
           >
             <Tabs.List
               aria-label="نوع پروفایل باشگاه مشتریان"
-              className="flex h-12 max-w-full items-center overflow-x-auto rounded-lg border border-black/10 bg-[#e0e4e6] p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="flex h-12 max-w-full [scrollbar-width:none] items-center overflow-x-auto rounded-lg border border-black/10 bg-[#e0e4e6] p-1 [&::-webkit-scrollbar]:hidden"
             >
               <AudienceTab value="user">پروفایل شخصی</AudienceTab>
 
@@ -86,14 +90,20 @@ export function AudienceSwitcher({ vitrins }: AudienceSwitcherProps) {
   );
 }
 
-function AudienceTab({ value, children }: { value: string; children: ReactNode }) {
+function AudienceTab({
+  value,
+  children,
+}: {
+  value: string;
+  children: ReactNode;
+}) {
   return (
     <Tabs.Trigger
       value={value}
       className={cn(
-        "h-10 min-w-[126px] shrink-0 rounded-lg px-3 text-[16px] font-normal leading-7 text-[#15181a] outline-none transition-colors",
+        "h-10 min-w-[126px] shrink-0 rounded-lg px-3 text-[16px] leading-7 font-normal text-[#15181a] transition-colors outline-none",
         "hover:bg-white/60 focus-visible:ring-2 focus-visible:ring-[#19a7e5]/45",
-        "data-[state=active]:border-2 data-[state=active]:border-[#19a7e5] data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:leading-[30px] data-[state=active]:shadow-[0_1px_2px_rgba(15,23,42,0.08)]",
+        "data-[state=active]:border-2 data-[state=active]:border-[#19a7e5] data-[state=active]:bg-white data-[state=active]:leading-[30px] data-[state=active]:font-bold data-[state=active]:shadow-[0_1px_2px_rgba(15,23,42,0.08)]",
       )}
     >
       {children}

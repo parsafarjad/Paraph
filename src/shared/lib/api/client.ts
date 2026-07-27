@@ -7,7 +7,9 @@ import type { ApiErrorResponse } from "@/shared/types/api";
 const DEFAULT_API_BASE_URL = "https://wholesaler-core-v2.paraf.app/api";
 
 export const apiClient = axios.create({
-  baseURL: (process.env.NEXT_PUBLIC_API_BASE_URL ?? DEFAULT_API_BASE_URL).replace(/\/$/, ""),
+  baseURL: (
+    process.env.NEXT_PUBLIC_API_BASE_URL ?? DEFAULT_API_BASE_URL
+  ).replace(/\/$/, ""),
   timeout: 20_000,
   headers: {
     Accept: "application/json",

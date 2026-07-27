@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import 'tailwind-animations';
+@import "tailwind-animations";
 
 @utility animation-infinite {
   animation-iteration-count: infinite !important;
@@ -16,7 +16,6 @@
   --color-paraf-sky: #24aee5;
   --color-paraf-violet: #6d3bea;
 }
-
 
 :root {
   color-scheme: light;
@@ -38,7 +37,7 @@ body {
   min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
-   font-family: var(--font-iranyekan-local), Tahoma, Arial, sans-serif;
+  font-family: var(--font-iranyekan-local), Tahoma, Arial, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
