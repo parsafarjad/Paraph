@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 
 import { useCustomerClubStore } from "@/features/customer-club/store/customer-club.store";
 import type { UserVitrin } from "@/features/customer-club/types/customer-club.types";
+import { PageContainer } from "@/shared/components/layout/page-container";
 import { cn } from "@/shared/utils/cn";
 
 interface AudienceSwitcherProps {
@@ -21,10 +22,35 @@ export function AudienceSwitcher({ vitrins }: AudienceSwitcherProps) {
   const selectedValue = scope === "vitrin" && vitrinId ? `vitrin:${vitrinId}` : "user";
 
   return (
-    <section aria-label="انتخاب باشگاه مشتریان" className="bg-white">
-      <div className="mx-auto flex min-h-[72px] w-[calc(100%_-_32px)] max-w-[1600px] flex-col justify-center gap-4 py-3 md:flex-row md:items-start md:justify-between md:py-1">
-        <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
-          <p className="shrink-0 text-[14px] font-medium text-[#252525]">
+    <section
+      aria-label="انتخاب باشگاه مشتریان"
+      className="bg-[linear-gradient(90deg,rgba(255,255,255,0)_0%,rgba(255,255,255,.50)_15%,rgba(255,255,255,.05)_32%,rgba(255,255,255,.05)_59%,rgba(255,255,255,.50)_79%,rgba(255,255,255,0)_100%)]"
+    >
+      <PageContainer
+        dir="ltr"
+        className="flex min-h-[56px] flex-col justify-center gap-4 py-2 md:flex-row md:items-center md:justify-between min-[1440px]:px-10 min-[1440px]:py-1"
+      >
+        <nav
+          dir="rtl"
+          aria-label="راهنمای باشگاه مشتریان"
+          className="flex items-center gap-8 text-[14px] font-bold leading-[25px] text-[#15181a] min-[1440px]:gap-10"
+        >
+          <Link
+            href="#faq"
+            className="rounded-md outline-none transition-colors hover:text-[#0f6489] focus-visible:ring-2 focus-visible:ring-[#19a7e5]/40"
+          >
+            سوالات متداول شما
+          </Link>
+          <Link
+            href="#rules"
+            className="rounded-md outline-none transition-colors hover:text-[#0f6489] focus-visible:ring-2 focus-visible:ring-[#19a7e5]/40"
+          >
+            قوانین و مقررات
+          </Link>
+        </nav>
+
+        <div dir="rtl" className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center sm:gap-2">
+          <p className="shrink-0 text-[14px] font-semibold leading-[25px] text-[#15181a]">
             انتخاب باشگاه مشتریان:
           </p>
 
@@ -43,7 +69,7 @@ export function AudienceSwitcher({ vitrins }: AudienceSwitcherProps) {
           >
             <Tabs.List
               aria-label="نوع پروفایل باشگاه مشتریان"
-              className="flex h-12 max-w-full items-center overflow-x-auto rounded-[8px] border border-[#cfd5d9] bg-[#e8ecef] p-[3px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="flex h-12 max-w-full items-center overflow-x-auto rounded-lg border border-black/10 bg-[#e0e4e6] p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               <AudienceTab value="user">پروفایل شخصی</AudienceTab>
 
@@ -55,43 +81,19 @@ export function AudienceSwitcher({ vitrins }: AudienceSwitcherProps) {
             </Tabs.List>
           </Tabs.Root>
         </div>
-
-        <nav
-          aria-label="راهنمای باشگاه مشتریان"
-          className="flex items-center gap-10 text-[14px] font-bold text-[#161616] md:min-h-12"
-        >
-          <Link
-            href="#rules"
-            className="rounded-md outline-none transition-colors hover:text-[#159ed8] focus-visible:ring-2 focus-visible:ring-[#20aae5]/40"
-          >
-            قوانین و مقررات
-          </Link>
-          <Link
-            href="#faq"
-            className="rounded-md outline-none transition-colors hover:text-[#159ed8] focus-visible:ring-2 focus-visible:ring-[#20aae5]/40"
-          >
-            سوالات متداول شما
-          </Link>
-        </nav>
-      </div>
+      </PageContainer>
     </section>
   );
 }
 
-function AudienceTab({
-  value,
-  children,
-}: {
-  value: string;
-  children: ReactNode;
-}) {
+function AudienceTab({ value, children }: { value: string; children: ReactNode }) {
   return (
     <Tabs.Trigger
       value={value}
       className={cn(
-        "h-10 min-w-[126px] shrink-0 rounded-[7px] px-4 text-[15px] font-medium text-[#2f3437] outline-none transition-colors",
-        "hover:bg-white/60 focus-visible:ring-2 focus-visible:ring-[#20aae5]/45",
-        "data-[state=active]:border-2 data-[state=active]:border-[#139edc] data-[state=active]:bg-white data-[state=active]:font-black data-[state=active]:text-[#171717] data-[state=active]:shadow-[0_1px_2px_rgba(15,23,42,0.08)]",
+        "h-10 min-w-[126px] shrink-0 rounded-lg px-3 text-[16px] font-normal leading-7 text-[#15181a] outline-none transition-colors",
+        "hover:bg-white/60 focus-visible:ring-2 focus-visible:ring-[#19a7e5]/45",
+        "data-[state=active]:border-2 data-[state=active]:border-[#19a7e5] data-[state=active]:bg-white data-[state=active]:font-bold data-[state=active]:leading-[30px] data-[state=active]:shadow-[0_1px_2px_rgba(15,23,42,0.08)]",
       )}
     >
       {children}

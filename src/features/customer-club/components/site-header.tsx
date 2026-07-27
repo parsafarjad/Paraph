@@ -8,16 +8,17 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import Image from "next/image";
-import type { ReactNode } from "react";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
+import { PageContainer } from "@/shared/components/layout/page-container";
 import { cn } from "@/shared/utils/cn";
 
 const navigationItems = [
-  { label: "کالا", href: "/", hasMenu: true },
-  { label: "خدمات", href: "/", hasMenu: true },
-  { label: "فروشندگان", href: "/", hasMenu: false },
-  { label: "نمایندگی‌ها", href: "/", hasMenu: false },
+  { label: "کالا", href: "#", hasMenu: true },
+  { label: "خدمات", href: "#", hasMenu: true },
+  { label: "فروشندگان", href: "#", hasMenu: false },
+  { label: "نمایندگی‌ها", href: "#", hasMenu: false },
 ] as const;
 
 type HeaderIconButtonProps = {
@@ -32,8 +33,7 @@ function HeaderIconButton({ label, children, className }: HeaderIconButtonProps)
       type="button"
       aria-label={label}
       className={cn(
-        "focus-ring grid size-8 place-items-center rounded-lg text-[#111719] transition-colors",
-        "hover:bg-[#f3f6f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#20aee7]/35",
+        "grid size-10 place-items-center rounded-lg text-[#15181a] transition-colors hover:bg-[#f5f7f7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#19a7e5]/35",
         className,
       )}
     >
@@ -44,36 +44,36 @@ function HeaderIconButton({ label, children, className }: HeaderIconButtonProps)
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 h-12 border-b border-[#edf0f1] bg-white/95 backdrop-blur-xl">
-      <div className="mx-auto flex h-full max-w-[1180px] items-center px-4 xl:px-0">
-        <div className="flex shrink-0 items-center gap-7">
+    <header className="relative z-50 h-[73px] border-b border-[#ecf0f2] bg-white">
+      <PageContainer className="flex h-full items-center justify-between">
+        <div className="flex min-w-0 items-center gap-10">
           <Link
             href="/"
             aria-label="صفحه اصلی پاراف"
-            className="relative block h-10 w-[150px] shrink-0"
+            className="relative block h-[49px] w-[174px] shrink-0"
           >
             <Image
               src="/assets/paraf-brand.svg"
               alt="پاراف؛ بازار کالا و خدمات"
               fill
               priority
-              sizes="150px"
-              className="object-contain"
+              sizes="174px"
+              className="object-contain object-right"
             />
           </Link>
 
-          <nav aria-label="ناوبری اصلی" className="hidden items-center gap-6 lg:flex">
+          <nav aria-label="ناوبری اصلی" className="hidden items-center gap-9 xl:flex">
             {navigationItems.map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="group flex h-9 items-center gap-1 whitespace-nowrap text-[11px] font-semibold text-[#56646b] transition-colors hover:text-[#111719]"
+                className="group flex h-10 items-center gap-1.5 whitespace-nowrap text-[16px] font-medium leading-7 text-[#667880] transition-colors hover:text-[#15181a]"
               >
                 <span>{item.label}</span>
                 {item.hasMenu ? (
                   <ChevronDown
                     aria-hidden="true"
-                    className="size-3 stroke-[1.7] text-[#7c878c] transition-transform group-hover:translate-y-0.5"
+                    className="size-4 stroke-[1.6] text-[#859399] transition-transform group-hover:translate-y-0.5"
                   />
                 ) : null}
               </Link>
@@ -81,52 +81,51 @@ export function SiteHeader() {
           </nav>
         </div>
 
-        <div
-          role="search"
-          className="ms-auto hidden h-[28px] w-[230px] shrink-0 items-center rounded-full border border-[#cbd3d7] bg-[#f3f6f7] px-3 shadow-[inset_0_1px_1px_rgba(15,23,42,0.03)] md:flex"
-        >
-          <Search aria-hidden="true" className="size-4 shrink-0 stroke-[1.7] text-[#687980]" />
+        <label className="mx-6 hidden h-10 w-[350px] shrink-0 items-center rounded-full border border-[#c2c9cc] bg-[#ecf0f2] px-4 shadow-[inset_0_1px_2px_rgba(21,24,26,0.04)] lg:flex">
+          <Search aria-hidden="true" className="size-5 shrink-0 stroke-[1.6] text-[#667880]" />
           <input
             type="search"
             aria-label="جستجو در آگهی‌ها"
             placeholder="جستجو در آگهی‌ها..."
-            className="h-full min-w-0 flex-1 bg-transparent px-2 text-right text-[10px] text-[#46545a] outline-none placeholder:text-[#adb6ba]"
+            className="h-full min-w-0 flex-1 bg-transparent px-3 text-right text-[14px] text-[#49575d] outline-none placeholder:text-[#a3aeb3]"
           />
-        </div>
+        </label>
 
-        <div className="ms-4 hidden h-full shrink-0 items-center xl:flex">
-          <button
-            type="button"
-            className="focus-ring flex h-8 items-center gap-1 px-2 text-[10px] font-semibold text-[#9aa4a8] transition-colors hover:text-[#59676d]"
-            aria-label="انتخاب زبان و واحد پول"
-          >
-            <Languages aria-hidden="true" className="size-3.5 stroke-[1.7] text-[#a6afb3]" />
-            <span className="whitespace-nowrap">فارسی / IRT</span>
-          </button>
+        <div dir="ltr" className="hidden shrink-0 items-center gap-2 xl:flex">
+          <div className="flex items-center gap-1">
+            <HeaderIconButton label="اپلیکیشن‌ها">
+              <Grid2X2 className="size-5 stroke-[1.8]" />
+            </HeaderIconButton>
+            <HeaderIconButton label="سبد خرید">
+              <ShoppingCart className="size-[22px] stroke-[1.7]" />
+            </HeaderIconButton>
+            <HeaderIconButton label="اعلان‌ها">
+              <Bell className="size-[21px] stroke-[1.7]" />
+            </HeaderIconButton>
+          </div>
+
+          <span aria-hidden="true" className="mx-2 h-10 w-px bg-[#ecf0f2]" />
 
           <Link
-            href="/"
-            className="mx-2 inline-flex h-8 items-center whitespace-nowrap px-1 text-[11px] font-extrabold text-[#13191c] transition-colors hover:text-[#159fd8]"
+            dir="rtl"
+            href="#"
+            className="inline-flex h-10 items-center whitespace-nowrap px-3 text-[16px] font-bold text-[#15181a] transition-colors hover:text-[#0f6489]"
           >
             ثبت آگهی جدید
           </Link>
 
-          <span aria-hidden="true" className="mx-2 h-7 w-px bg-[#e8ecee]" />
-
-          <div dir="ltr" className="flex items-center gap-[2px]">
-            <HeaderIconButton label="اپلیکیشن‌ها">
-              <Grid2X2 className="size-[17px] stroke-[1.9]" />
-            </HeaderIconButton>
-            <HeaderIconButton label="سبد خرید">
-              <ShoppingCart className="size-[17px] stroke-[1.8]" />
-            </HeaderIconButton>
-            <HeaderIconButton label="اعلان‌ها">
-              <Bell className="size-[17px] stroke-[1.8]" />
-            </HeaderIconButton>
-          </div>
+          <button
+            type="button"
+            dir="rtl"
+            className="flex h-10 items-center gap-2 whitespace-nowrap px-3 text-[14px] font-medium text-[#a3aeb3] transition-colors hover:text-[#667880]"
+            aria-label="انتخاب زبان و واحد پول"
+          >
+            <Languages aria-hidden="true" className="size-[18px] stroke-[1.6]" />
+            <span>فارسی / IRT</span>
+          </button>
         </div>
 
-        <div className="ms-auto flex items-center gap-1 xl:hidden">
+        <div className="flex items-center gap-1 xl:hidden">
           <HeaderIconButton label="سبد خرید" className="hidden sm:grid">
             <ShoppingCart className="size-5" />
           </HeaderIconButton>
@@ -134,7 +133,7 @@ export function SiteHeader() {
             <Menu className="size-6" />
           </HeaderIconButton>
         </div>
-      </div>
+      </PageContainer>
     </header>
   );
 }

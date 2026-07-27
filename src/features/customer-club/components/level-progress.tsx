@@ -70,11 +70,11 @@ function LevelProgressSkeleton() {
   return (
     <section
       aria-label="در حال دریافت اطلاعات سطح‌ها"
-      className="mx-auto grid w-full max-w-[1280px] animate-pulse gap-10 lg:grid-cols-[360px_minmax(0,1fr)]"
+      className="mx-auto grid w-full max-w-[1284px] animate-pulse gap-10 lg:grid-cols-[360px_minmax(0,1fr)] min-[1440px]:grid-cols-[360px_884px]"
     >
       <div className="mt-[78px] h-[156px] rounded-[80px] bg-[#e7ebff]" />
       <div>
-        <div className="h-[240px] rounded-[24px] bg-[#dfe2ff]" />
+        <div className="h-[239px] rounded-[24px] bg-[#dfe2ff]" />
         <div className="mx-auto mt-6 h-10 w-[78%] rounded-full bg-slate-100" />
       </div>
     </section>
@@ -83,7 +83,7 @@ function LevelProgressSkeleton() {
 
 function LevelProgressError({ error, onRetry }: Pick<LevelProgressProps, "error" | "onRetry">) {
   return (
-    <Card className="mx-auto max-w-[1280px] border border-amber-200/80 bg-white/95 p-8 text-center shadow-sm">
+    <Card className="mx-auto max-w-[1284px] border border-amber-200/80 bg-white/95 p-8 text-center shadow-sm">
       <h2 className="mb-2 text-base font-black text-slate-900">
         اطلاعات سطح‌ها در دسترس نیست
       </h2>
@@ -125,7 +125,7 @@ export function LevelProgress({
 
   if (levels.length === 0) {
     return (
-      <Card className="mx-auto max-w-[1280px] p-8 text-center text-sm text-slate-500">
+      <Card className="mx-auto max-w-[1284px] p-8 text-center text-sm text-slate-500">
         هنوز سطحی برای باشگاه مشتریان تعریف نشده است.
       </Card>
     );
@@ -154,12 +154,12 @@ export function LevelProgress({
   return (
     <section
       aria-labelledby="level-progress-title"
-      className="mx-auto grid w-full max-w-[1280px] gap-8 lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-10"
+      className="mx-auto grid w-full max-w-[1284px] gap-8 lg:grid-cols-[360px_minmax(0,1fr)] min-[1440px]:grid-cols-[360px_884px] lg:gap-10"
       dir="ltr"
     >
       <aside
         dir="rtl"
-        className="order-2 flex min-h-[156px] flex-col items-center justify-center rounded-[80px] bg-[radial-gradient(circle_at_23%_18%,rgba(255,255,255,.78),transparent_34%),linear-gradient(125deg,#c9d7ff_0%,#e1e2ff_55%,#cdd4ff_100%)] px-8 py-7 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.75)] lg:order-1 lg:mt-[78px]"
+        className="order-2 flex min-h-[156px] flex-col items-center justify-center rounded-[80px] bg-[radial-gradient(circle_at_23%_18%,rgba(255,255,255,.78),transparent_34%),linear-gradient(125deg,#c9d7ff_0%,#e1e2ff_55%,#cdd4ff_100%)] px-8 py-7 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.75)] lg:order-1 lg:mt-[77px]"
       >
         {nextLevel ? (
           <>
@@ -192,7 +192,7 @@ export function LevelProgress({
       </aside>
 
       <div dir="rtl" className="order-1 min-w-0 lg:order-2">
-        <div className="relative h-[240px] overflow-hidden rounded-[24px] bg-[radial-gradient(circle_at_22%_26%,rgba(255,255,255,.58),transparent_26%),radial-gradient(circle_at_60%_5%,rgba(255,255,255,.26),transparent_31%),linear-gradient(112deg,#bac9ff_0%,#d4d4ff_52%,#d4d0ff_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,.68)]">
+        <div className="relative h-[239px] overflow-hidden rounded-[24px] bg-[radial-gradient(circle_at_22%_26%,rgba(255,255,255,.58),transparent_26%),radial-gradient(circle_at_60%_5%,rgba(255,255,255,.26),transparent_31%),linear-gradient(112deg,#bac9ff_0%,#d4d4ff_52%,#d4d0ff_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,.68)]">
           <div className="pointer-events-none absolute inset-0 opacity-45 [background-image:radial-gradient(circle_at_center,rgba(255,255,255,.68)_1px,transparent_1.4px)] [background-size:9px_9px] [mask-image:linear-gradient(100deg,black,transparent_72%)]" />
           <div className="pointer-events-none absolute -left-8 top-3 h-44 w-80 rounded-full bg-white/25 blur-3xl" />
           <div className="pointer-events-none absolute right-32 top-0 h-40 w-72 rounded-full bg-[#b8baff]/30 blur-3xl" />
@@ -222,7 +222,7 @@ export function LevelProgress({
               <LevelIcon level={currentLevel} index={currentIndex} size="lg" />
             ) : (
               <div className="grid size-28 place-items-center text-[#b1a1c6]">
-                <Flag className="size-16 fill-white/80 stroke-[1.4]" />
+                <Image src={"/assets/flag.svg"} alt="" width={50} height={50} className="size-16" />
               </div>
             )}
           </div>

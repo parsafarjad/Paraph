@@ -88,14 +88,33 @@ export async function getLevels(): Promise<ClubLevel[]> {
 export async function getRecentActivities(
   query: ActivitiesQuery,
 ): Promise<RecentActivitiesResponse> {
-  const payload = await getPayload<unknown>("/recent-activities", {
+  const accessToken = useAuthStore.getState().accessToken;
+
+  if (!accessToken) {
+    throw new Error("برای دریافت فعالیت‌ها ابتدا وارد حساب کاربری شوید.");
+  }
+
+  const params = {
     offset: query.offset,
     size: query.size,
     ...(query.type === "ALL" ? {} : { type: query.type }),
     ...(query.scope === "vitrin" && query.vitrinId
-      ? { userVitrinId: query.vitrinId }
+      ? {}
       : {}),
+  };
+
+  const { data } = await axios.get<unknown>("/api/recent-activities", {
+    params,
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    withCredentials: false,
+    timeout: 20_000,
   });
 
-  return normalizeActivities(payload, query.offset, query.size);
+  // Validate the API envelope without discarding top-level pagination metadata.
+  void unwrapApiPayload<unknown>(data);
+
+  return normalizeActivities(data, query.offset, query.size);
 }

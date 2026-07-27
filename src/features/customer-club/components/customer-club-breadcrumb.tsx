@@ -2,6 +2,7 @@ import { ArrowLeft, ChevronLeft, CircleHelp } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { PageContainer } from "@/shared/components/layout/page-container";
 import { formatNumber } from "@/shared/utils/format";
 
 type CustomerClubBreadcrumbProps = {
@@ -16,83 +17,72 @@ export function CustomerClubBreadcrumb({
   isLoading = false,
 }: CustomerClubBreadcrumbProps) {
   return (
-    <section className="h-8 border-b border-[#edf0f1] bg-[#f5f7f7]">
-      <div className="mx-auto flex h-full max-w-[1180px] items-center justify-between px-4 xl:px-0">
-        <nav
-          aria-label="مسیر صفحه"
-          className="flex min-w-0 items-center gap-2 text-[10px]"
-        >
+    <section className="h-[49px] border-b border-[#ecf0f2] bg-[#f5f7f7]">
+      <PageContainer className="flex h-full items-center justify-between">
+        <nav aria-label="مسیر صفحه" className="flex min-w-0 items-center gap-3 text-[12px]">
           <Link
             href="/"
-            className="flex shrink-0 items-center gap-[10px] font-extrabold text-[#161c1f] transition-colors hover:text-[#159fd8]"
+            className="flex shrink-0 items-center gap-3 font-bold text-[#15181a] transition-colors hover:text-[#0f6489]"
           >
-            <ArrowLeft aria-hidden="true" className="size-3.5 stroke-[2]" />
+            <ArrowLeft aria-hidden="true" className="size-5 stroke-[1.7]" />
             <span>برگشت</span>
           </Link>
 
           <Link
             href="/"
-            className="shrink-0 font-semibold text-[#607078] transition-colors hover:text-[#1b2428]"
+            className="shrink-0 font-medium text-[#667880] transition-colors hover:text-[#15181a]"
           >
             صفحه اصلی
           </Link>
 
-          <ChevronLeft
-            aria-hidden="true"
-            className="size-[13px] shrink-0 stroke-[1.8] text-[#9aa5aa]"
-          />
+          <ChevronLeft aria-hidden="true" className="size-4 shrink-0 text-[#a3aeb3]" />
 
-          <span aria-current="page" className="truncate text-[#9aa5aa]">
+          <span aria-current="page" className="truncate text-[#a3aeb3]">
             پاراف کلاب
           </span>
         </nav>
 
-        <div dir="ltr" className="hidden items-center gap-3 md:flex">
+        <div dir="ltr" className="hidden items-center gap-4 md:flex">
           <div
             aria-label={`امتیاز وفاداری: ${formatNumber(score)}`}
-            className="relative h-6 w-[152px] overflow-visible rounded-full bg-white shadow-[0_2px_10px_rgba(30,45,52,0.16)]"
+            className="relative h-8 w-[196px] overflow-visible rounded-full bg-white shadow-[0_0_12px_rgba(102,120,128,0.25)]"
           >
             <span
-              className="absolute top-[3px] right-7 flex h-[18px] w-14 items-center justify-center rounded-full bg-[linear-gradient(90deg,#6841ea_0%,#9f48ef_100%)] text-[9px] leading-none font-extrabold text-white"
               dir="rtl"
+              className="absolute right-[35px] top-1 flex h-6 min-w-[76px] items-center justify-center rounded-full bg-[linear-gradient(90deg,#6841ea_0%,#9747ff_100%)] px-3 text-[12px] font-bold leading-none text-white"
             >
               {isLoading ? "—" : formatNumber(score)}
             </span>
-            <div className="z-10 size-6 rounded-full bg-white">
-              <Image
-                src="/assets/loyalty-cup.svg"
-                alt=""
-                aria-hidden="true"
-                width={26}
-                height={30}
-                className="absolute -top-[3px] right-px z-20 h-[30px] w-[26px] object-contain"
-              />
-            </div>
+            <Image
+              src="/assets/loyalty-cup.svg"
+              alt=""
+              aria-hidden="true"
+              width={38}
+              height={44}
+              className="absolute -top-[6px] right-0 z-10 h-11 w-[38px] object-contain"
+            />
           </div>
 
           <button
             type="button"
             aria-label="راهنمای کیف پول و امتیازها"
-            className="grid size-6 place-items-center rounded-full text-[#a2adb1] transition-colors hover:bg-white hover:text-[#5e6d73] focus-visible:ring-2 focus-visible:ring-[#20aee7]/35 focus-visible:outline-none"
+            className="grid size-8 place-items-center rounded-full text-[#a3aeb3] transition-colors hover:bg-white hover:text-[#667880] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#19a7e5]/35"
           >
-            <CircleHelp
-              aria-hidden="true"
-              className="size-[19px] stroke-[1.7]"
-            />
+            <CircleHelp aria-hidden="true" className="size-5 stroke-[1.6]" />
           </button>
 
           <div
             dir="rtl"
-            className="flex h-6 w-[130px] items-center justify-center gap-1 rounded-md border border-[#c8d0d3] bg-[#f7f9f9] px-2 text-[9px] shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]"
+            className="flex h-8 min-w-[190px] items-center justify-center gap-1.5 rounded-lg border border-[#c2c9cc] bg-white/70 px-4 text-[12px]"
           >
-            <span className="font-semibold text-[#929da2]">کیف پول :</span>
-            <strong className="font-extrabold tracking-[-0.02em] text-[#172024]">
+            <span className="font-medium text-[#859399]">کیف پول:</span>
+            <strong className="font-bold text-[#15181a]">
               {isLoading ? "—" : formatNumber(coins)}
             </strong>
-            <span className="text-[9px] font-medium text-[#a4adb1]">تومان</span>
+            <span className="text-[10px] text-[#a3aeb3]">تومان</span>
           </div>
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

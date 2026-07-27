@@ -4,7 +4,6 @@ import {
   ChevronLeft,
   CircleAlert,
   CircleHelp,
-  // CircleInfo,
   Link2,
   Zap,
 } from "lucide-react";
@@ -17,6 +16,7 @@ import type {
   VitrinProfile,
 } from "@/features/customer-club/types/customer-club.types";
 import { roleLabels } from "@/features/customer-club/utils/normalize";
+import { PageContainer } from "@/shared/components/layout/page-container";
 import { formatNumber } from "@/shared/utils/format";
 
 interface ProfileOverviewProps {
@@ -34,36 +34,54 @@ export function ProfileOverview({
 }: ProfileOverviewProps) {
   const title = selectedVitrin?.companyName ?? user.fullName;
   const avatarUrl =
-    selectedVitrin?.avatarUrl ?? user.avatarUrl ?? "/assets/profile-placeholder.jpg";
+    selectedVitrin?.avatarUrl ?? user.avatarUrl ?? "/assets/avatar.jpg";
   const scores = selectedVitrin?.scores ?? user.scores;
   const coins = selectedVitrin?.coins ?? user.coins;
   const level = selectedVitrin?.level ?? user.level;
   const roleLabel = selectedVitrin
-    ? roleLabels[selectedVitrin.role] ?? selectedVitrin.role
-    : user.membershipTitle ?? "مغازه‌دار";
+    ? (roleLabels[selectedVitrin.role] ?? selectedVitrin.role)
+    : (user.membershipTitle ?? "مغازه‌دار");
   const profileDescription = selectedVitrin
     ? `${roleLabels[selectedVitrin.role] ?? selectedVitrin.role} / ویترین پاراف`
     : getProfileDescription(user);
 
   return (
-    <section aria-label="خلاصه پروفایل باشگاه مشتریان" className="bg-white pb-10 pt-[31px]">
-      <div className="mx-auto w-[calc(100%_-_32px)] max-w-[1600px]">
-        <div
-          dir="ltr"
-          className="grid gap-5 xl:min-h-[145px] xl:grid-cols-[minmax(0,1fr)_minmax(360px,1.077fr)_minmax(0,1fr)] xl:gap-0 min-[1680px]:grid-cols-[520px_560px_520px]"
-        >
-          <StatsPanel coins={coins} scores={scores} level={level} summary={summary} />
-          <MissionPanel />
-          <ProfilePanel
-            title={title}
-            description={profileDescription}
-            roleLabel={roleLabel}
-            avatarUrl={avatarUrl}
-            completedMissions={summary.numberTasksCompleted}
-          />
+    <section aria-label="خلاصه پروفایل باشگاه مشتریان">
+      <PageContainer>
+        <div className="rounded-[24px] border-[1.5px] border-white bg-white p-5 shadow-[0_1px_0_rgba(255,255,255,.8)] min-[1440px]:h-[224px] min-[1440px]:p-10 sm:p-8">
+          <div
+            dir="ltr"
+            className="grid h-full gap-8 min-[1440px]:grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)_1px_minmax(0,1fr)] min-[1440px]:gap-10"
+          >
+            <StatsPanel
+              coins={coins}
+              scores={scores}
+              level={level}
+              summary={summary}
+            />
+            <Separator />
+            <MissionPanel />
+            <Separator />
+            <ProfilePanel
+              title={title}
+              description={profileDescription}
+              roleLabel={roleLabel}
+              avatarUrl={avatarUrl}
+              completedMissions={summary.numberTasksCompleted}
+            />
+          </div>
         </div>
-      </div>
+      </PageContainer>
     </section>
+  );
+}
+
+function Separator() {
+  return (
+    <span
+      aria-hidden="true"
+      className="hidden h-full w-px bg-[#ecf0f2] min-[1440px]:block"
+    />
   );
 }
 
@@ -83,39 +101,44 @@ function ProfilePanel({
   return (
     <div
       dir="rtl"
-      className="flex min-h-[145px] items-center justify-center gap-5 rounded-3xl border border-[#edf0f2] p-4 xl:justify-end xl:rounded-none xl:border-0 xl:pr-0"
+      className="flex min-w-0 items-center justify-center gap-6 min-[1440px]:justify-end"
     >
-      <div className="relative size-[130px] shrink-0 overflow-hidden rounded-[26px] bg-[#eef1f3] shadow-[0_4px_14px_rgba(15,23,42,0.20)] ring-1 ring-[#e2e7ea]">
+      <div className="relative size-32 shrink-0 overflow-hidden rounded-[24px] border-8 border-white">
         <Image
           src={avatarUrl}
           alt={`تصویر پروفایل ${title}`}
           fill
           unoptimized
-          sizes="130px"
+          sizes="128px"
           className="object-cover"
         />
       </div>
 
-      <div className="min-w-0 text-right xl:w-[205px]">
-        <div className="flex items-center justify-start gap-2">
-          <h2 className="truncate text-[25px] font-black leading-9 text-[#1f1f1f]">{title}</h2>
-          <BadgeCheck aria-label="پروفایل تاییدشده" className="size-[22px] shrink-0 text-[#0aa2ef]" />
+      <div className="flex min-w-0 flex-col items-start gap-1.5 text-right min-[1440px]:w-[220px]">
+        <div className="flex max-w-full items-center gap-2">
+          <h2 className="h-9 truncate text-right text-[24px] leading-none font-semibold text-[#15181a]">
+            {title}
+          </h2>
+          <BadgeCheck
+            aria-label="پروفایل تاییدشده"
+            className="size-6 shrink-0 text-[#0a9ff0]"
+          />
         </div>
 
-        <p className="mt-2 truncate text-[15px] font-normal text-[#9aa2a8]">{description}</p>
+        <p className="max-w-full truncate text-[14px] leading-[25px] text-[#a3aeb3]">
+          {description}
+        </p>
 
-        <span className="mt-2 inline-flex min-h-6 items-center rounded-full bg-[#f1f3f4] px-3 text-[12px] font-medium text-[#4f5559]">
+        <span className="inline-flex min-h-[23px] items-center rounded-full bg-[#ecf0f2] px-2 text-[12px] leading-none text-[#15181a]">
           {roleLabel}
         </span>
 
-        <p className="mt-2.5 flex items-center gap-1.5 text-[12px] text-[#8d959b]">
-          <CheckSquare className="size-4 text-[#cbd1d5]" />
-          <span>
-            ماموریت انجام‌شده
-            <strong className="mr-2 text-[14px] font-black text-[#222]">
-              {formatNumber(completedMissions)}
-            </strong>
-          </span>
+        <p className="flex items-center justify-end gap-2 px-1 py-0.5 text-[13px] leading-[23px] text-[#667880]">
+          <CheckSquare className="size-5 text-[#c2c9cc]" />
+          <span>ماموریت انجام‌شده</span>
+          <strong className="text-[14px] leading-[25px] font-bold text-[#15181a]">
+            {formatNumber(completedMissions)}
+          </strong>
         </p>
       </div>
     </div>
@@ -126,11 +149,13 @@ function MissionPanel() {
   return (
     <div
       dir="rtl"
-      className="flex min-h-[145px] flex-col items-center justify-center rounded-3xl border border-[#edf0f2] px-4 py-7 text-center xl:rounded-none xl:border-y-0 xl:border-x"
+      className="flex min-w-0 flex-col items-center justify-center gap-3 text-center"
     >
-      <p className="mb-3 inline-flex min-h-[30px] max-w-full items-center gap-1.5 rounded-full bg-[#ffe2e2] px-3 text-[13px] font-medium text-[#f24f51]">
-        <CircleAlert className="size-[17px] shrink-0" />
-        <span className="truncate">وقت کمی مونده، ماموریت رو همین الان انجام بده.</span>
+      <p className="inline-flex max-w-full items-center gap-1 rounded-full bg-[#f9d5d5] px-2 py-0.5 text-[14px] leading-[25px] text-[#e02d2d]">
+        <span className="truncate">
+          وقت کمی مونده، ماموریتت رو همین الان انجام بده.
+        </span>
+        <CircleAlert className="size-4 shrink-0" />
       </p>
 
       <MissionDialog />
@@ -150,40 +175,43 @@ function StatsPanel({
   summary: ClubSummary;
 }) {
   return (
-    <div dir="ltr" className="min-h-[145px] rounded-3xl border border-[#edf0f2] p-4 xl:rounded-none xl:border-0 xl:p-0">
-      <div className="grid h-[88px] grid-cols-2 gap-[22px]">
+    <div dir="ltr" className="min-w-0">
+      <div className="grid grid-cols-1 gap-6 min-[1440px]:h-[88px] sm:grid-cols-2">
         <CoinCard coins={coins} />
         <LevelCard level={level} scores={scores} />
       </div>
 
-      <div className="mt-4 flex min-h-[41px] items-center justify-between gap-2 border-t border-[#edf0f2] pt-2 text-[11px] text-[#555d62]">
-        <div dir="rtl" className="flex shrink-0 items-center gap-1.5 whitespace-nowrap">
+      <div className="mt-4 flex min-h-10 flex-wrap items-center justify-between gap-2 border-t border-[#ecf0f2] px-2 pt-1 text-[10px] font-semibold text-[#667880] min-[1440px]:flex-nowrap">
+        <div
+          dir="rtl"
+          className="flex shrink-0 items-center gap-1 whitespace-nowrap"
+        >
+          <Image
+            src="/assets/cup.svg"
+            alt=""
+            width={32}
+            height={32}
+            aria-hidden="true"
+            className="size-8 object-contain"
+          />
           <span>معادل:</span>
-          <strong className="font-black text-[#1f2529]">
+          <strong className="text-[14px] leading-[25px] font-bold text-[#15181a]">
             {formatNumber(summary.totalScoreMonthly)} امتیاز
           </strong>
-          <Image
-            src="/assets/profile-overview/small-trophy.png"
-            alt=""
-            width={25}
-            height={28}
-            aria-hidden="true"
-            className="object-contain"
-          />
         </div>
 
-        <div dir="rtl" className="flex min-w-0 items-center gap-1.5">
+        <div dir="rtl" className="flex min-w-0 items-center gap-1">
           <Image
-            src="/assets/profile-overview/discount-tag.png"
+            src="/assets/badge.svg"
             alt=""
-            width={27}
-            height={27}
+            width={32}
+            height={32}
             aria-hidden="true"
-            className="shrink-0 object-contain"
+            className="size-8 shrink-0 object-contain"
           />
           <p className="truncate">
             سکه دریافتی از طرح تخفیف سکه‌ای:
-            <strong className="mx-1 font-black text-[#2f3437]">
+            <strong className="mx-1 text-[14px] leading-[25px] font-bold text-[#15181a]">
               {formatNumber(summary.totalCoinMonthly)}
             </strong>
             سکه
@@ -192,10 +220,10 @@ function StatsPanel({
 
         <span
           dir="rtl"
-          className="inline-flex h-[27px] shrink-0 items-center gap-1 rounded-full bg-[#eef1f3] px-3 font-bold text-[#4b5257]"
+          className="flex items-center h-[23px] shrink-0 items-center gap-1 rounded-full bg-[#ecf0f2] px-2 text-[12px] font-normal text-[#15181a]"
         >
-          {formatNumber(30)} روز اخیر
-          <ChevronLeft className="size-3.5 text-[#aab1b6]" />
+          <strong className="font-bold">۳۰</strong> روز اخیر
+          <ChevronLeft className="size-4" />
         </span>
       </div>
     </div>
@@ -207,32 +235,43 @@ function CoinCard({ coins }: { coins: number }) {
 
   return (
     <article
-      dir="rtl"
-      className="relative flex h-[88px] items-center justify-between overflow-hidden rounded-[24px] border border-[#f1ead8] bg-[#fffbef] px-4 shadow-[0_4px_12px_rgba(55,65,81,0.16)]"
+      dir="ltr"
+      className="flex min-h-[88px] items-center gap-2 overflow-hidden rounded-[24px] bg-[rgba(217,163,0,.08)] px-2 py-3 shadow-[0_0_12px_rgba(102,120,128,.40)]"
     >
-      <div className="min-w-0 pr-1">
-        <p className="flex items-center gap-1.5 whitespace-nowrap text-[14px] font-black text-[#303438]">
-          <Link2 className="size-4 text-[#bcc3c7]" />
-          <strong className="text-[16px]">{formatNumber(coins)}</strong>
-          سکه
-        </p>
-        <p className="mt-2 whitespace-nowrap text-[12px] text-[#afb4b7]">
-          <strong className="text-[13px] font-medium text-[#9da4a8]">
-            {formatNumber(tomanValue)}
-          </strong>{" "}
-          تومان
-        </p>
-      </div>
-
       <Image
-        src="/assets/profile-overview/coins-stack.png"
+        src="/assets/coins.svg"
         alt="سکه‌های پاراف"
-        width={56}
-        height={66}
-        className="object-contain"
+        width={64}
+        height={64}
+        className="size-16 shrink-0 object-contain"
       />
 
-      {/* <CircleInfo className="absolute bottom-[17px] right-[16px] size-[17px] text-[#7d8c94]" /> */}
+      <div dir="rtl" className="flex min-w-0 flex-1 items-end justify-between">
+        <div className="min-w-0">
+          <div className="flex items-center gap-1 ">
+            <Link2 className="size-5 text-[#c2c9cc]" />
+            <strong className="leading-[30px] font-bold text-[#15181a]">
+              {formatNumber(coins)}
+            </strong>
+            <p className="text-[16px] leading-7 whitespace-nowrap text-[#667880]">
+
+            سکه
+            </p>
+            <Image
+              src={"/assets/coin-icon.svg"}
+              alt=""
+              width={20}
+              height={20}
+            />
+          </div>
+          <p className="text-[12px] whitespace-nowrap text-[#a3aeb3]">
+            <strong className="text-[16px] leading-[30px] font-semibold">
+              {formatNumber(tomanValue)}
+            </strong>{" "}
+            تومان
+          </p>
+        </div>
+      </div>
     </article>
   );
 }
@@ -243,28 +282,32 @@ function LevelCard({ level, scores }: { level: string; scores: number }) {
   return (
     <article
       dir="rtl"
-      className="relative flex h-[88px] items-center justify-end gap-5 overflow-hidden rounded-[24px] border border-[#edf0f2] bg-white px-4 shadow-[0_4px_12px_rgba(55,65,81,0.16)]"
+      className="flex min-h-[88px] items-center gap-2 overflow-hidden rounded-[24px] bg-white px-2 py-3 shadow-[0_0_12px_rgba(102,120,128,.40)]"
     >
       <Image
-        src="/assets/profile-overview/bronze-trophy.png"
+        src="/assets/bronze-cup.svg"
         alt="جام سطح باشگاه"
-        width={38}
-        height={58}
-        className="object-contain"
+        width={64}
+        height={64}
+        className="size-16 shrink-0 object-contain"
       />
 
-      <div className="text-right">
-        <p className="whitespace-nowrap text-[16px] font-black text-[#22272a]">{normalizedLevel}</p>
-        <p className="mt-2 flex items-center gap-1 whitespace-nowrap text-[12px] text-[#aab0b4]">
-          <Zap className="size-[18px] text-[#d9dde0]" />
-          امتیاز
-          <strong className="mr-1 text-[14px] font-black text-[#303438]">
-            {formatNumber(scores)}
-          </strong>
-        </p>
-      </div>
+      <div className="flex min-w-0 flex-1 items-end justify-between">
+        <div className="text-right">
+          <p className="text-[16px] leading-[30px] font-bold whitespace-nowrap text-[#15181a]">
+            {normalizedLevel}
+          </p>
+          <p className="flex items-center gap-1 text-[12px] whitespace-nowrap text-[#a3aeb3]">
+            <Zap className="size-5 text-[#c2c9cc]" />
+            امتیاز
+            <strong className="text-[16px] leading-[30px] font-semibold text-[#15181a]">
+              {formatNumber(scores)}
+            </strong>
+          </p>
+        </div>
 
-      <CircleHelp className="absolute bottom-[17px] left-[16px] size-[17px] text-[#7d8c94]" />
+        <CircleHelp className="size-[18px] shrink-0 text-[#667880]" />
+      </div>
     </article>
   );
 }

@@ -1,61 +1,86 @@
-import { Card } from "@/shared/components/ui/card";
+import Image from "next/image";
+
+import { PageContainer } from "@/shared/components/layout/page-container";
+
+const description =
+  "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است.";
 
 const features = [
   {
     title: "جوایز ویژه",
-    description: "با فعالیت در باشگاه مشتریان، امتیاز جمع کنید و جوایز اختصاصی دریافت کنید.",
-    icon: "🎁",
+    description,
+    image: "/assets/features/gift.png",
   },
   {
     title: "پشتیبانی حرفه‌ای",
-    description: "پاسخ‌گویی سریع‌تر و دسترسی به مسیر پشتیبانی ویژه اعضای باشگاه.",
-    icon: "🎧",
+    description,
+    image: "/assets/features/support.png",
   },
   {
     title: "ارسال رایگان",
-    description: "مزایای حمل‌ونقل و پیشنهادهای ویژه برای سفارش‌های واجد شرایط.",
-    icon: "🚀",
+    description,
+    image: "/assets/features/rocket.png",
   },
   {
     title: "گزارش فروش",
-    description: "مشاهده روند فعالیت‌ها، امتیازها و دستاوردهای دوره‌ای در یک نگاه.",
-    icon: "📈",
+    description,
+    image: "/assets/features/report.png",
   },
   {
     title: "رویدادهای ویژه",
-    description: "دسترسی به رویدادها، کمپین‌ها و ماموریت‌های محدود باشگاه مشتریان.",
-    icon: "🗓️",
+    description,
+    image: "/assets/features/events.png",
   },
   {
     title: "شبکه همکاران",
-    description: "ارتباط گسترده‌تر با اعضای اکوسیستم پاراف و فرصت‌های همکاری جدید.",
-    icon: "👥",
+    description,
+    image: "/assets/features/network.png",
   },
 ] as const;
 
 export function FeatureGrid() {
   return (
-    <section className="mx-auto max-w-[970px]">
-      <h2 className="mb-5 text-right text-xl font-black text-slate-900">
-        ویژگی‌های <span className="text-violet-700">پاراف کلاب</span>
-      </h2>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {features.map(({ title, description, icon }) => (
-          <Card
-            key={title}
-            className="group min-h-[174px] rounded-2xl p-5 text-center transition duration-300 will-change-transform hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(87,74,180,.16)]"
-          >
-            <span
-              aria-hidden="true"
-              className="mx-auto mb-3 block w-fit text-[46px] leading-none drop-shadow-[0_8px_10px_rgba(42,42,70,.16)] transition duration-300 group-hover:-rotate-3 group-hover:scale-110"
+    <section aria-labelledby="customer-club-features-title">
+      <PageContainer className="flex flex-col items-end gap-8 px-0 pb-12 min-[1440px]:min-h-[633px] min-[1440px]:px-10 min-[1440px]:pb-0">
+        <h2
+          id="customer-club-features-title"
+          className="h-[37px] text-right text-[24px] font-bold leading-[37px] tracking-[-0.18px] text-[#15181a]"
+        >
+          ویژگی‌های <span className="text-[#7c49f2]">پاراف‌کلاب</span>
+        </h2>
+
+        <div
+          dir="rtl"
+          className="grid w-full gap-6 sm:grid-cols-2 min-[1440px]:px-20 xl:grid-cols-3"
+        >
+          {features.map(({ title, description: featureDescription, image }) => (
+            <article
+              key={title}
+              className="group flex min-h-[230px] min-w-0 flex-col items-center gap-2 rounded-[24px] bg-[linear-gradient(216deg,#fff_0%,#ecf0f2_100%)] px-6 py-8 text-center shadow-[0_0_6px_rgba(102,120,128,.40)] transition-transform duration-300 hover:-translate-y-1 min-[1440px]:h-[270px]"
             >
-              {icon}
-            </span>
-            <h3 className="mb-1.5 text-sm font-black text-slate-900">{title}</h3>
-            <p className="text-[11px] leading-6 text-slate-500">{description}</p>
-          </Card>
-        ))}
-      </div>
+              <div className="relative size-[120px] shrink-0">
+                <Image
+                  src={image}
+                  alt=""
+                  aria-hidden="true"
+                  fill
+                  sizes="120px"
+                  className="object-contain transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+
+              <div className="flex w-full min-w-0 flex-col items-center gap-1.5">
+                <h3 className="max-w-full truncate text-[16px] font-bold leading-[30px] tracking-[-0.12px] text-[#15181a]">
+                  {title}
+                </h3>
+                <p className="w-full truncate text-[14px] leading-[25px] tracking-[-0.105px] text-[#667880]">
+                  {featureDescription}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </PageContainer>
     </section>
   );
 }

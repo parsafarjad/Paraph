@@ -1,45 +1,68 @@
 import Image from "next/image";
 
-export function WelcomeHero({ userName }: { userName?: string }) {
+import { PageContainer } from "@/shared/components/layout/page-container";
+
+interface WelcomeHeroProps {
+  userName?: string;
+}
+
+export function WelcomeHero({ userName }: WelcomeHeroProps) {
   const firstName = userName?.trim().split(/\s+/)[0] || "آرین";
 
   return (
-    <section className="relative h-[270px] overflow-hidden bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.95),transparent_25%),linear-gradient(180deg,#dff3ff_0%,#d7e7ff_58%,#e4e5ff_100%)] pt-[62px]">
-      <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle_at_center,rgba(80,109,255,.2)_1px,transparent_1px)] [mask-image:linear-gradient(to_bottom,transparent,black,transparent)] [background-size:22px_22px] opacity-40" /> 
-      <div className="relative mx-auto max-w-[980px] px-4">
-        <div className="relative mx-auto flex h-[134px] max-w-[680px] items-center justify-center rounded-[70px] border border-white/70 bg-white/95 px-8 shadow-[0_18px_60px_rgba(77,107,183,.12)]">
-          <div className="pointer-events-none absolute -bottom-10 -left-14 hidden h-[210px] w-[215px] sm:block">
+    <section
+      aria-labelledby="customer-club-welcome-title"
+      className="relative min-h-[362px] overflow-hidden"
+    >
+      <PageContainer className="relative min-h-[362px]">
+        <div className="mx-auto flex h-[200px] w-[900px] flex-col items-center justify-center gap-5 py-8 lg:flex-row min-[1440px]:block min-[1440px]:min-h-[362px] min-[1440px]:py-0">
+          <div className="relative z-10 flex h-[200px] w-full w-[900px] items-center justify-center rounded-[88px] border border-white/80 bg-white px-8 text-center shadow-[0_12px_40px_rgba(91,104,155,0.08)]  lg:px-16 lg:text-right min-[1440px]:absolute min-[1440px]:right-[20.2%] min-[1440px]:top-20  min-[1440px]:w-[54.82%] min-[1440px]:max-w-none min-[1440px]:rounded-[101px] min-[1440px]:pr-20">
+            <div className="relative z-20 max-w-[690px]">
+              <p className="mb-2 text-[16px] font-medium leading-7 text-[#15181a] min-[1440px]:text-[20px]">
+                {firstName} عزیز
+              </p>
+              <h1
+                id="customer-club-welcome-title"
+                className="text-[25px] font-black leading-[1.6] text-[#7c49f2] sm:text-[30px] min-[1440px]:whitespace-nowrap min-[1440px]:text-[40px] min-[1440px]:leading-[62px]"
+              >
+                <span>به </span>
+                <span>پاراف کلاب</span>{" "}
+                <span className="font-normal text-[#7c49f2]">(باشگاه مشتریان پاراف)</span>{" "}
+                <span>خوش اومدی!</span>
+              </h1>
+            </div>
+          </div>
+
+          <div className="relative z-20 h-[255px] w-[260px] shrink-0 lg:-mr-16 min-[1440px]:absolute min-[1440px]:left-[14.15%] min-[1440px]:top-0 min-[1440px]:h-[358px] min-[1440px]:w-[358px]">
             <Image
               src="/assets/hero-trophy.svg"
               alt="جام باشگاه مشتریان پاراف"
-              width={174}
-              height={171}
+              width={270}
+              height={265}
               priority
-              className="absolute top-0 left-4 h-[171px] w-[174px] object-contain [animation:float_4.5s_ease-in-out_infinite]"
-            /> 
+              className="absolute left-[42px] top-2 h-[220px] w-[224px] object-contain min-[1440px]:left-[40px] min-[1440px]:top-[35px] min-[1440px]:h-[270px] min-[1440px]:w-[275px]"
+            />
             <Image
               src="/assets/bag-coin.svg"
-              alt="جام باشگاه مشتریان پاراف"
-              width={94}
-              height={92}
+              alt="کیسه سکه باشگاه مشتریان پاراف"
+              width={150}
+              height={148}
               priority
-              className="absolute right-2 bottom-1 h-[92px] w-[94px] object-contain [animation:float_3.8s_ease-in-out_.5s_infinite]"
-            /> 
-          </div> 
-          <div className="text-center sm:pr-8 sm:pl-[130px] sm:text-right">
-            <p className="mb-2 text-xs font-semibold text-slate-500">
-              {firstName} عزیز
-            </p> 
-            <h1 className="text-xl leading-9 font-black text-violet-700 sm:text-[22px]">
-              به پاراف کلاب 
-              <span className="mx-2 text-base font-medium text-slate-500">
-                (باشگاه مشتریان پاراف)
-              </span> 
-              خوش اومدی! 
-            </h1> 
-          </div> 
-        </div> 
-      </div> 
+              className="absolute bottom-0 left-0 h-[112px] w-[115px] object-contain min-[1440px]:bottom-[25px] min-[1440px]:right-[10px] min-[1440px]:h-[166px] min-[1440px]:w-[170px]"
+            />
+          </div>
+
+          <Image
+          src={"/assets/spark.svg"}
+          alt=""
+            aria-hidden="true"
+            width={285}
+            height={285}
+            className="pointer-events-none absolute left-[42%] top-[20px] w-[350px] h-[350px] hidden  min-[1440px]:block"
+          />
+
+        </div>
+      </PageContainer>
     </section>
   );
 }

@@ -180,6 +180,20 @@ function normalizeActivityType(value: unknown) {
     : candidate;
 }
 
+function normalizeActivitiesTotal(value: unknown, fallback: number) {
+  if (Array.isArray(value)) {
+    const firstItem = asRecord(value[0]);
+    return number(get(firstItem, "count", "total", "totalCount"), fallback);
+  }
+
+  if (value && typeof value === "object") {
+    const record = asRecord(value);
+    return number(get(record, "count", "total", "totalCount"), fallback);
+  }
+
+  return number(value, fallback);
+}
+
 export function normalizeActivities(
   payload: unknown,
   offset: number,
@@ -206,7 +220,9 @@ export function normalizeActivities(
 
   const explicitTotal = get(root, "total", "count", "totalCount");
   const hasExplicitTotal = explicitTotal !== undefined && explicitTotal !== null;
-  const total = hasExplicitTotal ? number(explicitTotal, offset + items.length) : offset + items.length;
+  const total = hasExplicitTotal
+    ? normalizeActivitiesTotal(explicitTotal, offset + items.length)
+    : offset + items.length;
 
   return {
     items,
