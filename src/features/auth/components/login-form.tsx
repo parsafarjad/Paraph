@@ -30,14 +30,6 @@ export function LoginForm() {
       onSubmit={handleSubmit((values) => mutation.mutate(values))}
       noValidate
     >
-      <div className="rounded-2xl bg-sky-50 p-4 text-sm leading-7 text-sky-900">
-        <div className="mb-1 flex items-center gap-2 font-bold">
-          <Sparkles className="size-4" />
-          ارتباط با سرویس پاراف
-        </div>
-        درخواست ورود مستقیماً و با Axios به سرویس رسمی پاراف ارسال می‌شود.
-      </div>
-
       <label className="block space-y-2">
         <span className="text-sm font-semibold text-slate-700">
           شماره موبایل
